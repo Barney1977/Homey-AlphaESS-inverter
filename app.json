@@ -130,7 +130,34 @@
         "xlarge": "drivers/battery_modbus/assets/images/xlarge.png"
       },
       "id": "battery_modbus",
-      "settings": []
+      "settings": [
+        {
+          "id": "hostname",
+          "type": "text",
+          "label": {
+            "en": "Hostname"
+          }
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port"
+          },
+          "value": 502
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval"
+          },
+          "value": 10,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 1 second"
+          }
+        }
+      ]
     },
     {
       "name": {
@@ -303,7 +330,34 @@
         "xlarge": "drivers/grid_modbus/assets/images/xlarge.png"
       },
       "id": "grid_modbus",
-      "settings": []
+      "settings": [
+        {
+          "id": "hostname",
+          "type": "text",
+          "label": {
+            "en": "Hostname"
+          }
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port"
+          },
+          "value": 502
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval"
+          },
+          "value": 10,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 1 second"
+          }
+        }
+      ]
     },
     {
       "name": {
