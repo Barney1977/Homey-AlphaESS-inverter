@@ -1,0 +1,20 @@
+[
+  {
+    "id": "hostname",
+    "type": "text",
+    "label": { "en": "Hostname" }
+  },
+  {
+    "id": "port",
+    "type": "number",
+    "label": { "en": "Port" },
+    "value": 502
+  },
+  {
+    "id": "interval",
+    "type": "number",
+    "label": { "en": "Interval" },
+    "value": 10,
+    "hint": { "en": "the refresh interval in seconds, minimum once every 1 second" }
+  }
+]

@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.aboreaon.alpaess",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -33,20 +33,18 @@
   "drivers": [
     {
       "name": {
-        "en": "AlphaESS inverter"
+        "en": "AlphaESS battery"
       },
       "class": "sensor",
       "capabilities": [
-        "measure_power",
         "measure_battery",
-        "measure_pv_power",
-        "measure_bat_power",
-        "measure_grid_power"
+        "measure_power"
       ],
       "energy": {
         "batteries": [
           "OTHER"
-        ]
+        ],
+        "cumulative": true
       },
       "platforms": [
         "local"
@@ -65,11 +63,11 @@
         }
       ],
       "images": {
-        "small": "drivers/inverter/assets/images/small.png",
-        "large": "drivers/inverter/assets/images/large.png",
-        "xlarge": "drivers/inverter/assets/images/xlarge.png"
+        "small": "drivers/battery/assets/images/small.png",
+        "large": "drivers/battery/assets/images/large.png",
+        "xlarge": "drivers/battery/assets/images/xlarge.png"
       },
-      "id": "inverter",
+      "id": "battery",
       "settings": [
         {
           "id": "sysSn",
@@ -94,56 +92,385 @@
           }
         }
       ]
-    }
-  ],
-  "capabilities": {
-    "measure_bat_power": {
-      "type": "number",
-      "title": {
-        "en": "Battery power",
-        "nl": "Batterij vermogen"
-      },
-      "units": {
-        "en": "W",
-        "nl": "W"
-      },
-      "getable": true,
-      "setable": false,
-      "decimals": 2,
-      "insights": true,
-      "icon": "assets/icons/bat.svg"
     },
-    "measure_grid_power": {
-      "type": "number",
-      "title": {
-        "en": "Grid power",
-        "nl": "Electriciteitsnet vermogen"
+    {
+      "name": {
+        "en": "AlphaESS Modbus battery"
       },
-      "units": {
-        "en": "W",
-        "nl": "W"
+      "class": "sensor",
+      "capabilities": [
+        "measure_battery",
+        "measure_power"
+      ],
+      "energy": {
+        "batteries": [
+          "OTHER"
+        ],
+        "cumulative": true
       },
-      "getable": true,
-      "setable": false,
-      "decimals": 2,
-      "insights": true,
-      "icon": "assets/icons/grid.svg"
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/battery_modbus/assets/images/small.png",
+        "large": "drivers/battery_modbus/assets/images/large.png",
+        "xlarge": "drivers/battery_modbus/assets/images/xlarge.png"
+      },
+      "id": "battery_modbus",
+      "settings": []
     },
-    "measure_pv_power": {
-      "type": "number",
-      "title": {
-        "en": "PV Power",
-        "nl": "PV Vermogen"
+    {
+      "name": {
+        "en": "AlphaESS grid meter"
       },
-      "units": {
-        "en": "W",
-        "nl": "W"
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "measure_power.L1",
+        "measure_power.L2",
+        "measure_power.L3",
+        "measure_power.imported",
+        "measure_power.exported",
+        "measure_power.load"
+      ],
+      "capabilitiesOptions": {
+        "measure_power.load": {
+          "title": {
+            "en": "Total used power"
+          }
+        },
+        "measure_power.L1": {
+          "title": {
+            "en": "Power L1"
+          }
+        },
+        "measure_power.L2": {
+          "title": {
+            "en": "Power L2"
+          }
+        },
+        "measure_power.L3": {
+          "title": {
+            "en": "Power L3"
+          }
+        },
+        "measure_power.imported": {
+          "title": {
+            "en": "Imported power"
+          }
+        },
+        "measure_power.exported": {
+          "title": {
+            "en": "Exported power"
+          }
+        }
       },
-      "getable": true,
-      "setable": false,
-      "decimals": 2,
-      "insights": true,
-      "icon": "assets/icons/solar.svg"
+      "energy": {
+        "cumulative": true,
+        "cumulativeImportedCapability": "measure_power.imported",
+        "cumulativeExportedCapability": "measure_power.exported"
+      },
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/grid/assets/images/small.png",
+        "large": "drivers/grid/assets/images/large.png",
+        "xlarge": "drivers/grid/assets/images/xlarge.png"
+      },
+      "id": "grid",
+      "settings": [
+        {
+          "id": "sysSn",
+          "type": "text",
+          "label": {
+            "en": "sysSn"
+          },
+          "value": "ALB0020.....",
+          "hint": {
+            "en": "The sysSn of your device"
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval"
+          },
+          "value": 30,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 10 seconds"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "AlphaESS Modbus grid meter"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "measure_power.L1",
+        "measure_power.L2",
+        "measure_power.L3",
+        "measure_power.imported",
+        "measure_power.exported",
+        "measure_power.load"
+      ],
+      "capabilitiesOptions": {
+        "measure_power.load": {
+          "title": {
+            "en": "Total used power"
+          }
+        },
+        "measure_power.L1": {
+          "title": {
+            "en": "Power L1"
+          }
+        },
+        "measure_power.L2": {
+          "title": {
+            "en": "Power L2"
+          }
+        },
+        "measure_power.L3": {
+          "title": {
+            "en": "Power L3"
+          }
+        },
+        "measure_power.imported": {
+          "title": {
+            "en": "Imported power"
+          }
+        },
+        "measure_power.exported": {
+          "title": {
+            "en": "Exported power"
+          }
+        }
+      },
+      "energy": {
+        "cumulative": true,
+        "cumulativeImportedCapability": "measure_power.imported",
+        "cumulativeExportedCapability": "measure_power.exported"
+      },
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/grid_modbus/assets/images/small.png",
+        "large": "drivers/grid_modbus/assets/images/large.png",
+        "xlarge": "drivers/grid_modbus/assets/images/xlarge.png"
+      },
+      "id": "grid_modbus",
+      "settings": []
+    },
+    {
+      "name": {
+        "en": "AlphaESS solar panels"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "measure_power.ppv1",
+        "measure_power.ppv2",
+        "measure_power.ppv3",
+        "measure_power.ppv4"
+      ],
+      "capabilitiesOptions": {
+        "measure_power.ppv1": {
+          "title": {
+            "en": "Power PPV1"
+          }
+        },
+        "measure_power.ppv2": {
+          "title": {
+            "en": "Power PPV2"
+          }
+        },
+        "measure_power.ppv3": {
+          "title": {
+            "en": "Power PPV3"
+          }
+        },
+        "measure_power.ppv4": {
+          "title": {
+            "en": "Power PPV4"
+          }
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/panels/assets/images/small.png",
+        "large": "drivers/panels/assets/images/large.png",
+        "xlarge": "drivers/panels/assets/images/xlarge.png"
+      },
+      "id": "panels",
+      "settings": [
+        {
+          "id": "sysSn",
+          "type": "text",
+          "label": {
+            "en": "sysSn"
+          },
+          "value": "ALB0020.....",
+          "hint": {
+            "en": "The sysSn of your device"
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval"
+          },
+          "value": 30,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 10 seconds"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "AlphaESS Modbus solar panels"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "measure_power.ppv1",
+        "measure_power.ppv2",
+        "measure_power.ppv3",
+        "measure_power.ppv4",
+        "measure_temperature"
+      ],
+      "capabilitiesOptions": {
+        "measure_power.ppv1": {
+          "title": {
+            "en": "Power PPV1"
+          }
+        },
+        "measure_power.ppv2": {
+          "title": {
+            "en": "Power PPV2"
+          }
+        },
+        "measure_power.ppv3": {
+          "title": {
+            "en": "Power PPV3"
+          }
+        },
+        "measure_power.ppv4": {
+          "title": {
+            "en": "Power PPV4"
+          }
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/panels/assets/images/small.png",
+        "large": "drivers/panels/assets/images/large.png",
+        "xlarge": "drivers/panels/assets/images/xlarge.png"
+      },
+      "id": "panels_modbus",
+      "settings": [
+        {
+          "id": "hostname",
+          "type": "text",
+          "label": {
+            "en": "Hostname"
+          }
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port"
+          },
+          "value": 502
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval"
+          },
+          "value": 10,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 1 second"
+          }
+        }
+      ]
     }
-  }
+  ]
 }

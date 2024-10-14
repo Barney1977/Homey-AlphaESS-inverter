@@ -1,0 +1,983 @@
+[
+  {
+    "intRegister": 0,
+    "register": "0x0",
+    "name_en": "Grid-Meter CT enable",
+    "name_de": "Grid-Meter CT enable",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 0,
+        "name_en": false
+      },
+      {
+        "value": 1,
+        "name_en": true
+      }
+    ]
+  },
+  {
+    "intRegister": 1,
+    "register": "0x1",
+    "name_en": "Grid-Meter CT Rate",
+    "name_de": "Grid-Meter CT Rate",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 16,
+    "register": "0x10",
+    "name_en": "Total energyfeed to grid (Grid Meter)",
+    "name_de": "Gesamte Einspeisung ins Netz (Netzzähler)",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 18,
+    "register": "0x12",
+    "name_en": "Total energy consume from grid (Grid Meter)",
+    "name_de": "Gesamter Netzbezug (Netzzähler)",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 20,
+    "register": "0x14",
+    "name_en": "V_L1",
+    "name_de": "0x14 Spannung Phase L1",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 21,
+    "register": "0x15",
+    "name_en": "V_L2",
+    "name_de": "0x15 Spannung Phase L2",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 22,
+    "register": "0x16",
+    "name_en": "V_L3",
+    "name_de": "0x16 Spannung Phase L3",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 27,
+    "register": "0x1B",
+    "name_en": "Active power of A phase (Grid Meter)",
+    "name_de": "0x01B Wirkleistung der Phase A (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 29,
+    "register": "0x1D",
+    "name_en": "Active power of B phase (Grid Meter)",
+    "name_de": "0x01D Wirkleistung der Phase B (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 31,
+    "register": "0x1F",
+    "name_en": "Active power of C phase (Grid Meter)",
+    "name_de": "0x01F Wirkleistung der Phase C (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 33,
+    "register": "0x21",
+    "name_en": "Total Active power (Grid Meter)",
+    "name_de": "Gesamtwirkleistung (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 144,
+    "register": "0x90",
+    "name_en": "Total energy feed to grid (PVMeter)",
+    "name_de": "Gesamte Einspeisung ins Netz (PV-Zähler)",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 151,
+    "register": "0x97",
+    "name_en": "Current of L1 phase(PV)",
+    "name_de": "I L1 PV (Hybrid)",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 152,
+    "register": "0x98",
+    "name_en": "Current of L2 phase(PV)",
+    "name_de": "I L2 PV (Hybrid)",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 153,
+    "register": "0x99",
+    "name_en": "Current of L3 phase(PV)",
+    "name_de": "I L3 PV (Hybrid)",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 155,
+    "register": "0x9B",
+    "name_en": "Active power of L1 phase(PV)",
+    "name_de": "0x09B P L1 PV (Hybrid)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 157,
+    "register": "0x9D",
+    "name_en": "Active power of L2 phase(PV)",
+    "name_de": "0x09D P L2 PV (Hybrid)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 159,
+    "register": "0x9F",
+    "name_en": "Active power of L3 phase(PV)",
+    "name_de": "0x09F P L3 PV (Hybrid)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 161,
+    "register": "0xA1",
+    "name_en": "Total Active power (PVMeter)",
+    "name_de": "0x0A1 Gesamtwirkleistung (PV-Zähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 256,
+    "register": "0x100",
+    "name_en": "Battery voltage",
+    "name_de": "Batteriespannung",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 257,
+    "register": "0x101",
+    "name_en": "Battery current",
+    "name_de": "Batteriestrom",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 258,
+    "register": "0x102",
+    "name_en": "Battery SOC",
+    "name_de": "Batterie SOC",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 269,
+    "register": "0x10D",
+    "name_en": "MIN_Cell_Temperature",
+    "name_de": "0x10D Min Cell Temperature",
+    "unit": "°C",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 272,
+    "register": "0x110",
+    "name_en": "Max cell temperature",
+    "name_de": "Max cell temperature",
+    "unit": "°C",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 277,
+    "register": "0x115",
+    "name_en": "BMU_Software_Version",
+    "name_de": "BMU_Sw_Version",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 278,
+    "register": "0x116",
+    "name_en": "LMU_Software_Version",
+    "name_de": "LMU_Sw_Version",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 279,
+    "register": "0x117",
+    "name_en": "ISO_Software_Version",
+    "name_de": "0c117 ISO_Sw_Version",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 281,
+    "register": "0x119",
+    "name_en": "Battery capacity",
+    "name_de": "Batteriekapazität",
+    "unit": "kWh",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 282,
+    "register": "0x11A",
+    "name_en": "Battery typ",
+    "name_de": "Battery typ",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 2,
+        "name_en": "M4860"
+      },
+      {
+        "value": 3,
+        "name_en": "M48100"
+      },
+      {
+        "value": 13,
+        "name_en": "48112-P"
+      },
+      {
+        "value": 16,
+        "name_en": "Smile5-BAT"
+      },
+      {
+        "value": 24,
+        "name_en": "M4856-P"
+      },
+      {
+        "value": 27,
+        "name_en": "Smile-BAT-10.3P"
+      },
+      {
+        "value": 30,
+        "name_en": "Smile-BAT-10.1P"
+      },
+      {
+        "value": 33,
+        "name_en": "Smile-BAT-5.8P"
+      },
+      {
+        "value": 34,
+        "name_en": "Smile-BAT5-JP"
+      },
+      {
+        "value": 35,
+        "name_en": "Smile-BAT-13.7P"
+      }
+    ]
+  },
+  {
+    "intRegister": 283,
+    "register": "0x11B",
+    "name_en": "Battery SOH",
+    "name_de": "0x11B Batterie Restkapazität",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 284,
+    "register": "0x11C",
+    "name_en": "Battery Warning",
+    "name_de": "0x11C Batterie Warnunug",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 286,
+    "register": "0x11E",
+    "name_en": "Battery Fault",
+    "name_de": "0x11E Batterie Fehler",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 288,
+    "register": "0x120",
+    "name_en": "Battery charge energy",
+    "name_de": "Batterieladeenergie",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 290,
+    "register": "0x122",
+    "name_en": "Battery discharge energy",
+    "name_de": "Batterieentladeenergie",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 292,
+    "register": "0x124",
+    "name_en": "Battery energy charge from grid",
+    "name_de": "Batterieladung aus Netz",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 294,
+    "register": "0x126",
+    "name_en": "Battery Power",
+    "name_de": "Batterieleistung",
+    "unit": "W",
+    "type": "int16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 303,
+    "register": "0x12F",
+    "name_en": "Battery SOC Calibration",
+    "name_de": "0x012F Battery SOC Calibration",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1024,
+    "register": "0x400",
+    "name_en": "Inverter_Voltage_L1",
+    "name_de": "WR-Spannung L1",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1025,
+    "register": "0x401",
+    "name_en": "Inverter_Voltage_L2",
+    "name_de": "WR-Spannung L2",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1026,
+    "register": "0x402",
+    "name_en": "Inverter_Voltage_L3",
+    "name_de": "WR-Spannung L3",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1027,
+    "register": "0x403",
+    "name_en": "Inverter_Current_L1",
+    "name_de": "WR-Strom L1",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1028,
+    "register": "0x404",
+    "name_en": "Inverter_Current_L2",
+    "name_de": "WR-Strom L2",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1029,
+    "register": "0x405",
+    "name_en": "Inverter_Current_L3",
+    "name_de": "WR-Strom L3",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1030,
+    "register": "0x406",
+    "name_en": "Inverter_Power_L1",
+    "name_de": "Inverter P L1",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1036,
+    "register": "0x40C",
+    "name_en": "Inverter_Power_Total",
+    "name_de": "0x40C WR-Gesamtleistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1038,
+    "register": "0x40E",
+    "name_en": "Inverter_Backup_Voltage_L1",
+    "name_de": "0x40E Inverter_Backup_Voltage_L1",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1041,
+    "register": "0x411",
+    "name_en": "Inverter_Backup_Current_L1",
+    "name_de": "Inverter_Backup_Current_L 1",
+    "unit": "A",
+    "type": "int16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1044,
+    "register": "0x414",
+    "name_en": "Inverter_Backup_Power_L1",
+    "name_de": "Inverter_Backup_Power_L1",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1050,
+    "register": "0x41A",
+    "name_en": "Inverter_Backup_Power_Total",
+    "name_de": "0x41A WR-Gesamtbackupleis- tung",
+    "unit": "W",
+    "type": "int16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1052,
+    "register": "0x41C",
+    "name_en": "Inverter Grid Frequency",
+    "name_de": "0x41C WR-Netzfreqzenz",
+    "unit": "Hz",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1053,
+    "register": "0x41D",
+    "name_en": "PV1 Voltage",
+    "name_de": "0x41D  PV1-Spannung",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1054,
+    "register": "0x41E",
+    "name_en": "PV1 Current",
+    "name_de": "0x41E PV1-Strom",
+    "unit": "A",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1055,
+    "register": "0x41F",
+    "name_en": "PV1 power",
+    "name_de": "0x41F PV1-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1057,
+    "register": "0x421",
+    "name_en": "PV2 Voltage",
+    "name_de": "PV2-Spannung",
+    "unit": "V",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1058,
+    "register": "0x422",
+    "name_en": "PV2 Current",
+    "name_de": "PV2-Strom",
+    "unit": "A",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1059,
+    "register": "0x423",
+    "name_en": "PV2 power",
+    "name_de": "PV2-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1063,
+    "register": "0x427",
+    "name_en": "PV3 power",
+    "name_de": "PV3-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1082,
+    "register": "0x43A",
+    "name_en": "Inverter Fault 1",
+    "name_de": "0x43A INV Fehler 1",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1084,
+    "register": "0x43C",
+    "name_en": "Inverter Fault 2",
+    "name_de": "0x43C INV Fehler 2",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1086,
+    "register": "0x43E",
+    "name_en": "Total PV Energy",
+    "name_de": "0x43E PV-Gesamtenergie",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 1088,
+    "register": "0x440",
+    "name_en": "Inverter work mode",
+    "name_de": "WR-Arbeitsmodus",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 0,
+        "name_en": "Wait Mode"
+      },
+      {
+        "value": 1,
+        "name_en":"Online Mode"
+      },
+      {
+        "value": 2,
+        "name_en":"UPS Mode"
+      },
+      {
+        "value": 3,
+        "name_en":"Bypass Mode"
+      },
+      {
+        "value": 4,
+        "name_en":"Fault Mode"
+      },
+      {
+        "value": 5,
+        "name_en":"DC Mode"
+      },
+      {
+        "value": 6,
+        "name_en":"SelfTest Mode"
+      },
+      {
+        "value": 7,
+        "name_en":"Check Mode"
+      },
+      {
+        "value": 8,
+        "name_en":"Update Master Mode"
+      },
+      {
+        "value": 9,
+        "name_en":"Update Slave Mode"
+      },
+      {
+        "value": 10,
+        "name_en":"Update ARM Mode"
+      }
+    ]
+  },
+  {
+    "intRegister": 1099,
+    "register": "0x44B",
+    "name_en": "Inverter Fault extend 1",
+    "name_de": "0x44B INV erweit. Fehler1",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1101,
+    "register": "0x44D",
+    "name_en": "Inverter Fault extend 2",
+    "name_de": "0x44D INV erweit. Fehler2",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1600,
+    "register": "0x640",
+    "name_en": "Inverter_Master_Software_Version",
+    "name_de": "INV_Master_Sw_Version",
+    "unit": "",
+    "type": "string",
+    "len": 5,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1605,
+    "register": "0x645",
+    "name_en": "Inverter_Slave_Software_Version",
+    "name_de": "INV_Slave_Sw_Version",
+    "unit": "",
+    "type": "string",
+    "len": 5,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1610,
+    "register": "0x64A",
+    "name_en": "Inverter_SN",
+    "name_de": "0x64A INV_SN",
+    "unit": "",
+    "type": "string",
+    "len": 10,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1867,
+    "register": "0x74B",
+    "name_en": "EMS_Ver_High",
+    "name_de": "0x74B EMS_Ver_High",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1868,
+    "register": "0x74C",
+    "name_en": "EMS_Ver_Mid",
+    "name_de": "0x74C EMS_Ver_Mid",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 1869,
+    "register": "0x74D",
+    "name_en": "EMS_Ver_Low",
+    "name_de": "0x74D EMS_Ver_Low",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "intRegister": 2048,
+    "register": "0x800",
+    "name_en": "MAX Feed into grid percent",
+    "name_de": "Einspeisebegrenzung",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2049,
+    "register": "0x801",
+    "name_en": "PV Capacity Storage",
+    "name_de": "PV Capacity Storage",
+    "unit": "W",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2051,
+    "register": "0x803",
+    "name_en": "PV Capacity of Grid Inverter",
+    "name_de": "PV Capacity of Grid Inverter",
+    "unit": "W",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2053,
+    "register": "0x805",
+    "name_en": "System mode",
+    "name_de": "System mode",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 1,
+        "name_en": "AC Mode"
+      },
+      {
+        "value": 2,
+        "name_en": "DC Mode"
+      },
+      {
+        "value": 3,
+        "name_en": "Hybrid Mode"
+      }
+    ]
+  },
+  {
+    "intRegister": 2127,
+    "register": "0x84F",
+    "name_en": "Time period control flag",
+    "name_de": "0x84F Status Zeitkontrolle",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "switch"
+  },
+  {
+    "intRegister": 2128,
+    "register": "0x850",
+    "name_en": "UPS Reserve Soc",
+    "name_de": "USV Reserve",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2133,
+    "register": "0x855",
+    "name_en": "Max Battery SOC",
+    "name_de": "Obere Batterie-Ladegrenze",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2256,
+    "register": "0x8D0",
+    "name_en": "PV Inverter energy",
+    "name_de": "0x8D0 PV Inverter Energie",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2258,
+    "register": "0x8D2",
+    "name_en": "The system total PV energy",
+    "name_de": "0x8D2 The system total PV energy",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 2260,
+    "register": "0x8D4",
+    "name_en": "System fault",
+    "name_de": "0x8D4 System-Fehler",
+    "unit": "",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "state"
+  }
+]

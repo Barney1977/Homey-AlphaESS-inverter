@@ -1,0 +1,257 @@
+[
+  {
+    "intRegister": 1610,
+    "register": "0x64A",
+    "name_en": "Inverter SN",
+    "name_de": "Inverter Seriennummer",
+    "unit": "",
+    "type": "string",
+    "len": 10,
+    "factor": 1,
+    "frontend_type": "state"
+  },
+  {
+    "register": "0x21",
+    "name_en": "Total Active power (Grid Meter)",
+    "name_de": "Gesamtwirkleistung (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 27,
+    "register": "0x1B",
+    "name_en": "Active power of A phase (Grid Meter)",
+    "name_de": "0x01B Wirkleistung der Phase A (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 29,
+    "register": "0x1D",
+    "name_en": "Active power of B phase (Grid Meter)",
+    "name_de": "Wirkleistung der Phase B (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "intRegister": 31,
+    "register": "0x1F",
+    "name_en": "Active power of C phase (Grid Meter)",
+    "name_de": "Wirkleistung der Phase C (Netzzähler)",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x40C",
+    "name_en": "Inverter Power Total",
+    "name_de": "WR-Gesamtleistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x102",
+    "name_en": "Battery SOC",
+    "name_de": "Batterie SOC",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x41F",
+    "name_en": "PV1 power",
+    "name_de": "0x41F PV1-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x423",
+    "name_en": "PV2 power",
+    "name_de": "PV2-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x427",
+    "name_en": "PV3 power",
+    "name_de": "PV3-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x429",
+    "name_en": "PV4 power",
+    "name_de": "PV4-Leistung",
+    "unit": "W",
+    "type": "int32be",
+    "len": 2,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x435",
+    "name_en": "Inverter Temperature",
+    "unit": "°C",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x440",
+    "name_en": "Inverter work mode",
+    "name_de": "WR-Arbeitsmodus",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 0,
+        "name_en": "Wait Mode"
+      },
+      {
+        "value": 1,
+        "name_en":"Online Mode"
+      },
+      {
+        "value": 2,
+        "name_en":"UPS Mode"
+      },
+      {
+        "value": 3,
+        "name_en":"Bypass Mode"
+      },
+      {
+        "value": 4,
+        "name_en":"Fault Mode"
+      },
+      {
+        "value": 5,
+        "name_en":"DC Mode"
+      },
+      {
+        "value": 6,
+        "name_en":"SelfTest Mode"
+      },
+      {
+        "value": 7,
+        "name_en":"Check Mode"
+      },
+      {
+        "value": 8,
+        "name_en":"Update Master Mode"
+      },
+      {
+        "value": 9,
+        "name_en":"Update Slave Mode"
+      },
+      {
+        "value": 10,
+        "name_en":"Update ARM Mode"
+      }
+    ]
+  },
+  {
+    "register": "0x126",
+    "name_en": "Battery Power",
+    "name_de": "Batterieleistung",
+    "unit": "W",
+    "type": "int16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x11A",
+    "name_en": "Battery typ",
+    "name_de": "Battery typ",
+    "unit": "",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 1,
+    "frontend_type": "enum",
+    "enum": [
+      {
+        "value": 2,
+        "name_en": "M4860"
+      },
+      {
+        "value": 3,
+        "name_en": "M48100"
+      },
+      {
+        "value": 13,
+        "name_en": "48112-P"
+      },
+      {
+        "value": 16,
+        "name_en": "Smile5-BAT"
+      },
+      {
+        "value": 24,
+        "name_en": "M4856-P"
+      },
+      {
+        "value": 27,
+        "name_en": "Smile-BAT-10.3P"
+      },
+      {
+        "value": 30,
+        "name_en": "Smile-BAT-10.1P"
+      },
+      {
+        "value": 33,
+        "name_en": "Smile-BAT-5.8P"
+      },
+      {
+        "value": 34,
+        "name_en": "Smile-BAT5-JP"
+      },
+      {
+        "value": 35,
+        "name_en": "Smile-BAT-13.7P"
+      },
+      {
+        "value": 75,
+        "name_en": "Smile-BAT-8.2P"
+      }
+    ]
+  },
+  {
+    "register": "0x102",
+    "name_en": "Battery SOC",
+    "name_de": "Batterie SOC",
+    "unit": "%",
+    "type": "uint16be",
+    "len": 1,
+    "factor": 0.1,
+    "frontend_type": "value"
+  }
+]

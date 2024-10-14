@@ -1,0 +1,56 @@
+{
+  "name": {
+    "en": "AlphaESS solar panels"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "measure_power.ppv1",
+    "measure_power.ppv2",
+    "measure_power.ppv3",
+    "measure_power.ppv4"
+  ],
+  "capabilitiesOptions": {
+    "measure_power.ppv1": {
+      "title": {
+        "en": "Power PPV1"
+      }
+    },
+    "measure_power.ppv2": {
+      "title": {
+        "en": "Power PPV2"
+      }
+    },
+    "measure_power.ppv3": {
+      "title": {
+        "en": "Power PPV3"
+      }
+    },
+    "measure_power.ppv4": {
+      "title": {
+        "en": "Power PPV4"
+      }
+    }
+  },
+  "platforms": [
+    "local"
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "drivers/panels/assets/images/small.png",
+    "large": "drivers/panels/assets/images/large.png",
+    "xlarge": "drivers/panels/assets/images/xlarge.png"
+  }
+}

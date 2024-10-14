@@ -1,0 +1,76 @@
+{
+  "name": {
+    "en": "AlphaESS grid meter"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "measure_power",
+    
+    "measure_power.L1",
+    "measure_power.L2",
+    "measure_power.L3",
+
+    "measure_power.imported",
+    "measure_power.exported",
+
+    "measure_power.load"
+  ],
+  "capabilitiesOptions": {
+    "measure_power.load": {
+      "title": {
+        "en": "Total used power"
+      }
+    },
+    "measure_power.L1": {
+      "title": {
+        "en": "Power L1"
+      }
+    },
+    "measure_power.L2": {
+      "title": {
+        "en": "Power L2"
+      }
+    },
+    "measure_power.L3": {
+      "title": {
+        "en": "Power L3"
+      }
+    },
+    "measure_power.imported": {
+      "title": {
+        "en": "Imported power"
+      }
+    },
+    "measure_power.exported": {
+      "title": {
+        "en": "Exported power"
+      }
+    }
+  },
+  "energy": {    
+    "cumulative": true,
+    "cumulativeImportedCapability": "measure_power.imported",
+    "cumulativeExportedCapability": "measure_power.exported"
+  },
+  "platforms": [
+    "local"
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "drivers/grid/assets/images/small.png",
+    "large": "drivers/grid/assets/images/large.png",
+    "xlarge": "drivers/grid/assets/images/xlarge.png"
+  }
+}
