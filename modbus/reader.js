@@ -73,7 +73,8 @@ class ModbusReader {
             // eslint-disable-next-line no-lonely-if
             if (reg.frontend_type === 'enum') {
               const enumVal = reg.enum.find((e) => e.value === val);
-              result[reg.register].value = enumVal ? enumVal.name_en : val;
+              result[reg.register].value = val;
+              result[reg.register].value_name = enumVal ? enumVal.name_en : val;
             } else {
               result[reg.register].value = val * reg.factor ?? 1;
             }

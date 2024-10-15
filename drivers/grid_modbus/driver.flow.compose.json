@@ -1,0 +1,22 @@
+{
+  "triggers": [
+    {
+      "id": "alpha_state_changed",
+      "title": {
+        "en": "The work mode changed"
+      },
+      "tokens": [
+        {
+          "type": "string",
+          "name": "alpha_state",
+          "title": {
+            "en": "Inverter work mode"
+          },
+          "example": {
+            "en": "Wait Mode, UPS Mode, ..."
+          }
+        }
+      ]
+    }
+  ]
+}

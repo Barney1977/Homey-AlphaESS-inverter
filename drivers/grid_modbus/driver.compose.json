@@ -13,7 +13,9 @@
     "measure_power.imported",
     "measure_power.exported",
 
-    "measure_power.load"
+    "measure_power.load",
+
+    "alpha_state"
   ],
   "capabilitiesOptions": {
     "measure_power.load": {

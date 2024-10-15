@@ -269,7 +269,8 @@
         "measure_power.L3",
         "measure_power.imported",
         "measure_power.exported",
-        "measure_power.load"
+        "measure_power.load",
+        "alpha_state"
       ],
       "capabilitiesOptions": {
         "measure_power.load": {
@@ -526,5 +527,114 @@
         }
       ]
     }
-  ]
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "alpha_state_changed",
+        "title": {
+          "en": "The work mode changed"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "alpha_state",
+            "title": {
+              "en": "Inverter work mode"
+            },
+            "example": {
+              "en": "Wait Mode, UPS Mode, ..."
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=grid_modbus"
+          }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "alpha_state": {
+      "type": "enum",
+      "title": {
+        "en": "Inverter work mode"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Wait Mode"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Online Mode"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "UPS Mode"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "Bypass Mode"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "Fault Mode"
+          }
+        },
+        {
+          "id": "5",
+          "title": {
+            "en": "DC Mode"
+          }
+        },
+        {
+          "id": "6",
+          "title": {
+            "en": "SelfTest Mode"
+          }
+        },
+        {
+          "id": "7",
+          "title": {
+            "en": "Check Mode"
+          }
+        },
+        {
+          "id": "8",
+          "title": {
+            "en": "Update Master Mode"
+          }
+        },
+        {
+          "id": "9",
+          "title": {
+            "en": "Update Slave Mode"
+          }
+        },
+        {
+          "id": "10",
+          "title": {
+            "en": "Update ARM Mode"
+          }
+        }
+      ],
+      "icon": "/assets/icons/mode.svg"
+    }
+  }
 }
