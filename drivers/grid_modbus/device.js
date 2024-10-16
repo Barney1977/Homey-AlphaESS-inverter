@@ -20,23 +20,30 @@ class GridDevice extends BaseDevice {
 
     const grid = data['0x21'].value;
     const inverter = data['0x40C'].value;
-    const battery = data['0x102'].value;
+    const battery = data['0x126'].value;
+
+    let load = 0;
+
+    // battery discharging
+    if (battery > 0) {
+      load = battery + grid;
+    } else {
+      load = inverter + grid + battery;
+    }
 
     const oldState = this.getCapabilityValue('alpha_state');
     const newState = `${data['0x440'].value}`;
 
     await Promise.all([
       this.setCapabilityValue('measure_power', grid),
-
-      this.setCapabilityValue('measure_power.load',
-        inverter + grid + battery),
+      this.setCapabilityValue('measure_power.load', load),
 
       this.setCapabilityValue('measure_power.L1', data['0x1B'].value),
       this.setCapabilityValue('measure_power.L2', data['0x1D'].value),
       this.setCapabilityValue('measure_power.L3', data['0x1F'].value),
 
       this.setCapabilityValue('measure_power.imported', grid >= 0 ? grid : 0),
-      this.setCapabilityValue('measure_power.exported', grid < 0 ? grid : 0),
+      this.setCapabilityValue('measure_power.exported', grid < 0 ? grid * -1 : 0),
 
       this.setCapabilityValue('alpha_state', newState),
     ]);
