@@ -7,6 +7,10 @@ const DEFAULT_REGISTERS = require('./register.json');
 const UNIT_ID = 85;
 const PORT = 502;
 
+function dec2bin(dec) {
+  return (dec >>> 0).toString(2);
+}
+
 class ModbusReader {
 
   port = null;
@@ -69,6 +73,14 @@ class ModbusReader {
 
           if (reg.type === 'string') {
             result[reg.register].value = val;
+          }
+          if (reg.frontend_type === 'bits') {
+            const bitstr = dec2bin(val).padStart(reg.len * 16, '0');
+
+            result[reg.register].value = bitstr;
+            result[reg.register].value_string = reg.bits.map((e, i) => {
+              return bitstr[bitstr.length - i - 1] === '1' ? e : null;
+            }).filter((e) => e).join(',');
           } else {
             // eslint-disable-next-line no-lonely-if
             if (reg.frontend_type === 'enum') {

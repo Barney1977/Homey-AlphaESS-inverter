@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Fault code"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/icons/fault.svg"
+}

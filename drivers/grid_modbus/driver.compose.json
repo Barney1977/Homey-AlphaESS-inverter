@@ -15,9 +15,37 @@
 
     "measure_power.load",
 
-    "alpha_state"
+    "alpha_state",
+
+    "alarm_power",
+    "alarm_generic",
+
+    "alpha_fault_text.fault1",
+    "alpha_fault_text.fault2",
+    "alpha_fault_text.extended1",
+    "alpha_fault_text.extended2"
   ],
   "capabilitiesOptions": {
+    "alpha_fault_text.fault1": {
+      "title": {
+        "en": "Inverter Fault 1"
+      }
+    },
+    "alpha_fault_text.fault2": {
+      "title": {
+        "en": "Inverter Fault 2"
+      }
+    },
+    "alpha_fault_text.extended1": {
+      "title": {
+        "en": "Inverter Extended Fault 1"
+      }
+    },
+    "alpha_fault_text.extended2": {
+      "title": {
+        "en": "Inverter Extended Fault 2"
+      }
+    },
     "measure_power.load": {
       "title": {
         "en": "Total used power"

@@ -1,9 +1,9 @@
 'use strict';
 
 const Reader = require('./reader');
-const ALL = require('./register_all.json');
+const ALL = require('./register.json');
 
-const HOST = 'alphaess.iot.home.arpa';
+const HOST = 'proxy-alphaess.iot.home.arpa';
 const emitter = new Reader(HOST);
 
 (async () => {

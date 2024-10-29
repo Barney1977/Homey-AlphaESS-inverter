@@ -4,10 +4,10 @@
   },
   "class": "sensor",
   "capabilities": [
-    "measure_battery", 
+    "measure_battery",
     "measure_power"
   ],
-  "energy": {    
+  "energy": {
     "batteries": [
       "OTHER"
     ],

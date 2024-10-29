@@ -2,6 +2,11 @@
 
 import BaseDevice from '../baseModbusDevice';
 
+function formatBit(b) {
+  if (!b || b === '') return '-';
+  return b;
+}
+
 class GridDevice extends BaseDevice {
 
   flowTrigger;
@@ -10,7 +15,6 @@ class GridDevice extends BaseDevice {
     await super.onInit();
     this.flowTrigger = this.homey.flow.getTriggerCard('alpha_state_changed');
   }
-
 
   async setCapabilities(data) {
     // const pv = data['0x41F'].value
@@ -28,8 +32,10 @@ class GridDevice extends BaseDevice {
     if (battery > 0) {
       load = battery + grid;
     } else {
-      load = inverter + grid + battery;
+      load = inverter + grid;
     }
+
+    this.log('grid;', grid, 'inverter:', inverter, 'battery:', battery, 'load:', load);
 
     const oldState = this.getCapabilityValue('alpha_state');
     const newState = `${data['0x440'].value}`;
@@ -46,6 +52,14 @@ class GridDevice extends BaseDevice {
       this.setCapabilityValue('measure_power.exported', grid < 0 ? grid * -1 : 0),
 
       this.setCapabilityValue('alpha_state', newState),
+
+      this.setCapabilityValue('alarm_power', newState === 2 || newState === 3),
+      this.setCapabilityValue('alarm_generic', newState === 4),
+
+      this.setCapabilityValue('alpha_fault_text.fault1', formatBit(data['0x43A'].value_string)),
+      this.setCapabilityValue('alpha_fault_text.fault2', formatBit(data['0x43C'].value_string)),
+      this.setCapabilityValue('alpha_fault_text.extended1', formatBit(data['0x44B'].value_string)),
+      this.setCapabilityValue('alpha_fault_text.extended2', formatBit(data['0x44D'].value_string)),
     ]);
 
     if (oldState !== newState) {

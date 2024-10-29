@@ -5,8 +5,26 @@
   "class": "sensor",
   "capabilities": [
     "measure_battery",
-    "measure_power"
+    "measure_power",
+    "alarm_battery",
+    "alpha_fault_text.warning",
+    "alpha_fault_text.fault"
   ],
+  "capabilitiesOptions": {
+    "alpha_fault_text.warning": {
+      "title": {
+        "en": "Battery Warning"
+      }
+    },
+    "alpha_fault_text.fault": {
+      "title": {
+        "en": "Battery Fault"
+      }
+    },
+    "alarm_battery": {
+      "uiComponent": "sensor"
+    }
+  },
   "energy": {
     "batteries": [
       "OTHER"
