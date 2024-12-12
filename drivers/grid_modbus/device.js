@@ -60,6 +60,9 @@ class GridDevice extends BaseDevice {
       this.setCapabilityValue('alpha_fault_text.fault2', formatBit(data['0x43C'].value_string)),
       this.setCapabilityValue('alpha_fault_text.extended1', formatBit(data['0x44B'].value_string)),
       this.setCapabilityValue('alpha_fault_text.extended2', formatBit(data['0x44D'].value_string)),
+
+      this.setCapabilityValue('meter_power.exported', data['0x10'].value),
+      this.setCapabilityValue('meter_power.imported', data['0x12'].value),
     ]);
 
     if (oldState !== newState) {

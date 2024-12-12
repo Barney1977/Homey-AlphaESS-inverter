@@ -4,6 +4,10 @@ import BaseDevice from '../baseModbusDevice';
 
 class PanelDevice extends BaseDevice {
 
+  async onInit() {
+    await super.onInit();
+  }
+
   async setCapabilities(data) {
     const total = data['0x41F'].value
       + data['0x423'].value
@@ -19,6 +23,8 @@ class PanelDevice extends BaseDevice {
       this.setCapabilityValue('measure_power.ppv4', data['0x429'].value),
 
       this.setCapabilityValue('measure_temperature', data['0x435'].value),
+
+      this.setCapabilityValue('meter_power', data['0x43E'].value),
     ]);
   }
 

@@ -3,7 +3,6 @@
     "intRegister": 1610,
     "register": "0x64A",
     "name_en": "Inverter SN",
-    "name_de": "Inverter Seriennummer",
     "unit": "",
     "type": "string",
     "len": 10,
@@ -13,7 +12,6 @@
   {
     "register": "0x21",
     "name_en": "Total Active power (Grid Meter)",
-    "name_de": "Gesamtwirkleistung (Netzzähler)",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -24,7 +22,6 @@
     "intRegister": 27,
     "register": "0x1B",
     "name_en": "Active power of A phase (Grid Meter)",
-    "name_de": "0x01B Wirkleistung der Phase A (Netzzähler)",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -35,7 +32,6 @@
     "intRegister": 29,
     "register": "0x1D",
     "name_en": "Active power of B phase (Grid Meter)",
-    "name_de": "Wirkleistung der Phase B (Netzzähler)",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -46,7 +42,6 @@
     "intRegister": 31,
     "register": "0x1F",
     "name_en": "Active power of C phase (Grid Meter)",
-    "name_de": "Wirkleistung der Phase C (Netzzähler)",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -56,7 +51,6 @@
   {
     "register": "0x40C",
     "name_en": "Inverter Power Total",
-    "name_de": "WR-Gesamtleistung",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -66,7 +60,6 @@
   {
     "register": "0x102",
     "name_en": "Battery SOC",
-    "name_de": "Batterie SOC",
     "unit": "%",
     "type": "uint16be",
     "len": 1,
@@ -76,7 +69,6 @@
   {
     "register": "0x41F",
     "name_en": "PV1 power",
-    "name_de": "0x41F PV1-Leistung",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -86,7 +78,6 @@
   {
     "register": "0x423",
     "name_en": "PV2 power",
-    "name_de": "PV2-Leistung",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -96,7 +87,6 @@
   {
     "register": "0x427",
     "name_en": "PV3 power",
-    "name_de": "PV3-Leistung",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -106,7 +96,6 @@
   {
     "register": "0x429",
     "name_en": "PV4 power",
-    "name_de": "PV4-Leistung",
     "unit": "W",
     "type": "int32be",
     "len": 2,
@@ -125,7 +114,6 @@
   {
     "register": "0x440",
     "name_en": "Inverter work mode",
-    "name_de": "WR-Arbeitsmodus",
     "unit": "",
     "type": "uint16be",
     "len": 1,
@@ -181,7 +169,6 @@
   {
     "register": "0x126",
     "name_en": "Battery Power",
-    "name_de": "Batterieleistung",
     "unit": "W",
     "type": "int16be",
     "len": 1,
@@ -191,7 +178,6 @@
   {
     "register": "0x11A",
     "name_en": "Battery typ",
-    "name_de": "Battery typ",
     "unit": "",
     "type": "uint16be",
     "len": 1,
@@ -247,7 +233,6 @@
   {
     "register": "0x102",
     "name_en": "Battery SOC",
-    "name_de": "Batterie SOC",
     "unit": "%",
     "type": "uint16be",
     "len": 1,
@@ -424,5 +409,59 @@
       "17841 communication failure",
       "Mos temperature sensor error"
     ]
+  },
+  {
+    "register": "0x10",
+    "name_en": "Total energyfeed to grid (Grid Meter)",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x12",
+    "name_en": "Total energy consume from grid (Grid Meter)",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x43E",
+    "name_en": "Inverter Total PV Energy",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x120",
+    "name_en": "Battery charge energy",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x122",
+    "name_en": "Battery discharge energy",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
+  },
+  {
+    "register": "0x124",
+    "name_en": "Battery charge from grid",
+    "unit": "kWh",
+    "type": "uint32be",
+    "len": 2,
+    "factor": 0.01,
+    "frontend_type": "value"
   }
 ]

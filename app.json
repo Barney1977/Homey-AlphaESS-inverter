@@ -35,12 +35,13 @@
       "name": {
         "en": "AlphaESS battery"
       },
-      "class": "sensor",
+      "class": "battery",
       "capabilities": [
         "measure_battery",
         "measure_power"
       ],
       "energy": {
+        "homeBattery": true,
         "batteries": [
           "OTHER"
         ],
@@ -97,13 +98,16 @@
       "name": {
         "en": "AlphaESS Modbus battery"
       },
-      "class": "sensor",
+      "class": "battery",
       "capabilities": [
         "measure_battery",
         "measure_power",
         "alarm_battery",
         "alpha_fault_text.warning",
-        "alpha_fault_text.fault"
+        "alpha_fault_text.fault",
+        "meter_power.charged",
+        "meter_power.discharged",
+        "meter_power.grid"
       ],
       "capabilitiesOptions": {
         "alpha_fault_text.warning": {
@@ -118,12 +122,28 @@
         },
         "alarm_battery": {
           "uiComponent": "sensor"
+        },
+        "meter_power.charged": {
+          "title": {
+            "en": "Charged energy"
+          }
+        },
+        "meter_power.discharged": {
+          "title": {
+            "en": "Discharged energy"
+          }
+        },
+        "meter_power.gri": {
+          "title": {
+            "en": "Charged from Grid"
+          }
         }
       },
       "energy": {
         "batteries": [
           "OTHER"
         ],
+        "homeBattery": true,
         "cumulative": true
       },
       "platforms": [
@@ -294,7 +314,9 @@
         "alpha_fault_text.fault1",
         "alpha_fault_text.fault2",
         "alpha_fault_text.extended1",
-        "alpha_fault_text.extended2"
+        "alpha_fault_text.extended2",
+        "meter_power.imported",
+        "meter_power.exported"
       ],
       "capabilitiesOptions": {
         "alpha_fault_text.fault1": {
@@ -346,12 +368,22 @@
           "title": {
             "en": "Exported power"
           }
+        },
+        "meter_power.imported": {
+          "title": {
+            "en": "Imported energy"
+          }
+        },
+        "meter_power.exported": {
+          "title": {
+            "en": "Exported energy"
+          }
         }
       },
       "energy": {
         "cumulative": true,
-        "cumulativeImportedCapability": "measure_power.imported",
-        "cumulativeExportedCapability": "measure_power.exported"
+        "cumulativeImportedCapability": "meter_power.imported",
+        "cumulativeExportedCapability": "meter_power.exported"
       },
       "platforms": [
         "local"
@@ -496,7 +528,8 @@
         "measure_power.ppv2",
         "measure_power.ppv3",
         "measure_power.ppv4",
-        "measure_temperature"
+        "measure_temperature",
+        "meter_power"
       ],
       "capabilitiesOptions": {
         "measure_power.ppv1": {

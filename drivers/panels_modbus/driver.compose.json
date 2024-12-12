@@ -9,7 +9,9 @@
     "measure_power.ppv2",
     "measure_power.ppv3",
     "measure_power.ppv4",
-    "measure_temperature"
+    "measure_temperature",
+
+    "meter_power"
   ],
   "capabilitiesOptions": {
     "measure_power.ppv1": {

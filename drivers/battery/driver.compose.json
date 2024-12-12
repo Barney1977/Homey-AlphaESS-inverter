@@ -2,12 +2,13 @@
   "name": {
     "en": "AlphaESS battery"
   },
-  "class": "sensor",
+  "class": "battery",
   "capabilities": [
     "measure_battery",
     "measure_power"
   ],
   "energy": {
+    "homeBattery": true,
     "batteries": [
       "OTHER"
     ],
