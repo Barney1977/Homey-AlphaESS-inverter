@@ -434,7 +434,7 @@
     "unit": "kWh",
     "type": "uint32be",
     "len": 2,
-    "factor": 0.01,
+    "factor": 0.1,
     "frontend_type": "value"
   },
   {
