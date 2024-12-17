@@ -133,9 +133,9 @@
             "en": "Discharged energy"
           }
         },
-        "meter_power.gri": {
+        "meter_power.grid": {
           "title": {
-            "en": "Charged from Grid"
+            "en": "Charged from grid"
           }
         }
       },
