@@ -1,6 +1,17 @@
 {
   "name": {
-    "en": "AlphaESS battery"
+    "en": "AlphaESS battery",
+    "nl": "AlphaESS batterij",
+    "da": "AlphaESS batteri",
+    "de": "AlphaESS Batterie",
+    "es": "Batería AlphaESS",
+    "fr": "Batterie AlphaESS",
+    "it": "Batteria AlphaESS",
+    "no": "AlphaESS batteri",
+    "sv": "AlphaESS batteri",
+    "pl": "Bateria AlphaESS",
+    "ru": "Батарея AlphaESS",
+    "ko": "AlphaESS 배터리"
   },
   "class": "battery",
   "capabilities": [
