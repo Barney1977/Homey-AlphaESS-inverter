@@ -85,7 +85,7 @@ class ModbusReader {
             } else if (reg.frontend_type === 'enum') {
               const enumVal = reg.enum.find((e) => e.value === val);
               result[reg.register].value = val;
-              result[reg.register].value_name = enumVal ? enumVal.name_en : val;
+              result[reg.register].value_name = enumVal ? enumVal.name_en : val.toString();
             } else {
               result[reg.register].value = val * (reg.factor ?? 1);
             }

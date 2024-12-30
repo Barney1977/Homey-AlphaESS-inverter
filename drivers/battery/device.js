@@ -7,7 +7,7 @@ class BatteryDevice extends BaseDevice {
   async setCapabilities(data) {
     await Promise.all([
       this.setCapabilityValue('measure_battery', data.soc),
-      this.setCapabilityValue('measure_power', data.pbat),
+      this.setCapabilityValue('measure_power', data.pbat * -1),
     ]);
   }
 
