@@ -1,15 +1,15 @@
 'use strict';
 
-const Homey = require('homey');
-const Reader = require('../modbus/reader');
+import { Driver } from 'homey';
+import { ModbusReader, ModbusResult } from '../modbus/reader';
 
-class BaseDriver extends Homey.Driver {
+export default class BaseDriver extends Driver {
 
-  getName(data) {
-    return data['0x64A'].value;
+  getName(data: ModbusResult) {
+    return data['0x64A'].value || 'Unknown';
   }
 
-  async onPairListDevices(data) {
+  async onPairListDevices(): Promise<unknown[]> {
     try {
       const device = await this.fetchinvdata();
       this.log('onPairListDevices', device);
@@ -19,7 +19,7 @@ class BaseDriver extends Homey.Driver {
         {
           name: this.getName(device),
           data: {
-            id: device['0x64A'].value,
+            id: device['0x64A']?.value,
           },
           settings: {
             hostname: this.homey.settings.get('hostname'),
@@ -39,16 +39,8 @@ class BaseDriver extends Homey.Driver {
 
     this.log('Connecting to', host, port);
 
-    try {
-      const reader = new Reader(host, port);
-      return await reader.readOnce();
-    } catch (error) {
-      this.error('Failed to fetch data:', error);
-    }
-
-    return null;
+    const reader = new ModbusReader(host, port);
+    return reader.readOnce();
   }
 
 }
-
-module.exports = BaseDriver;

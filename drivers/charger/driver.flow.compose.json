@@ -1,0 +1,55 @@
+{
+  "triggers": [
+    {
+      "id": "alpha_charger_state_changed",
+      "title": {
+        "en": "The charger state changed",
+        "nl": "De laadstatus is veranderd",
+        "da": "Opladerens tilstand ændret",
+        "de": "Der Ladezustand hat sich geändert",
+        "es": "El estado del cargador cambió",
+        "fr": "L'état du chargeur a changé",
+        "it": "Lo stato del caricatore è cambiato",
+        "no": "Laderens tilstand har endret seg",
+        "sv": "Laddstatusen har ändrats",
+        "pl": "Stan ładowarki został zmieniony",
+        "ru": "Состояние зарядного устройства изменилось",
+        "ko": "충전기 상태가 변경되었습니다"
+      },
+      "tokens": [
+        {
+          "type": "string",
+          "name": "alpha_charger_state",
+          "title": {
+            "en": "Charger state",
+            "nl": "Laadstatus",
+            "da": "Opladerens tilstand",
+            "de": "Ladezustand",
+            "es": "Estado del cargador",
+            "fr": "État du chargeur",
+            "it": "Stato del caricatore",
+            "no": "Laderens tilstand",
+            "sv": "Laddstatus",
+            "pl": "Stan ładowarki",
+            "ru": "Состояние зарядного устройства",
+            "ko": "충전기 상태"
+          },
+          "example": {
+            "en": "1 .. 6, 9",
+            "nl": "1 .. 6, 9",
+            "da": "1 .. 6, 9",
+            "de": "1 .. 6, 9",
+            "es": "1 .. 6, 9",
+            "fr": "1 .. 6, 9",
+            "it": "1 .. 6, 9",
+            "no": "1 .. 6, 9",
+            "sv": "1 .. 6, 9",
+            "pl": "1 .. 6, 9",
+            "ru": "1 .. 6, 9",
+            "ko": "1 .. 6, 9"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,11 @@
 'use strict';
 
+import { LastPowerData } from '../../api/responseTypes';
 import BaseDevice from '../baseDevice';
 
 class PanelDevice extends BaseDevice {
 
-  async setCapabilities(data) {
+  async setCapabilities(data: LastPowerData) {
     await Promise.all([
       this.setCapabilityValue('measure_power', data.ppv),
 

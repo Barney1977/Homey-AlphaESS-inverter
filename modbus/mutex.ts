@@ -1,6 +1,9 @@
 'use strict';
 
-class Mutex {
+export default class Mutex {
+
+  private _locking: Promise<void>;
+  _locks: number;
 
   constructor() {
     this._locking = Promise.resolve();
@@ -14,9 +17,9 @@ class Mutex {
   lock() {
     this._locks += 1;
 
-    let unlockNext;
+    let unlockNext: () => void;
 
-    const willLock = new Promise((resolve) => {
+    const willLock = new Promise<void>((resolve) => {
       unlockNext = () => {
         this._locks -= 1;
         resolve();
@@ -30,5 +33,3 @@ class Mutex {
   }
 
 }
-
-module.exports = Mutex;

@@ -13,4 +13,4 @@ class MyApp extends Homey.App {
 
 }
 
-module.exports = MyApp;
+export = MyApp;

@@ -1,0 +1,142 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "EV Charger Mode",
+    "nl": "EV-oplader Modus",
+    "da": "EV-oplader Tilstand",
+    "de": "EV-Ladegeräte-Modus",
+    "es": "Modo de cargador EV",
+    "fr": "Mode de chargeur EV",
+    "it": "Modalità Caricatore EV",
+    "no": "EV-lader Modus",
+    "sv": "EV-laddare Läge",
+    "pl": "Tryb ładowarki EV",
+    "ru": "Режим зарядного устройства EV",
+    "ko": "EV 충전기 모드"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "values": [
+    {
+      "id": "1",
+      "title": {
+        "en": "Available",
+        "nl": "Beschikbaar",
+        "da": "Tilgængelig",
+        "de": "Verfügbar",
+        "es": "Disponible",
+        "fr": "Disponible",
+        "it": "Disponibile",
+        "no": "Tilgjengelig",
+        "sv": "Tillgänglig",
+        "pl": "Dostępny",
+        "ru": "Доступен",
+        "ko": "사용 가능"
+      }
+    },
+    {
+      "id": "2",
+      "title": {
+        "en": "Preparing",
+        "nl": "Aan het voorbereiden",
+        "da": "Forbereder",
+        "de": "Vorbereiten",
+        "es": "Preparando",
+        "fr": "Préparation",
+        "it": "Preparazione",
+        "no": "Forbereder",
+        "sv": "Förbereder",
+        "pl": "Przygotowanie",
+        "ru": "Подготовка",
+        "ko": "준비 중"
+      }
+    },
+    {
+      "id": "3",
+      "title": {
+        "en": "Charging",
+        "nl": "Opladen",
+        "da": "Opladning",
+        "de": "Laden",
+        "es": "Cargando",
+        "fr": "Chargement",
+        "it": "Caricamento",
+        "no": "Lader",
+        "sv": "Laddar",
+        "pl": "Ładowanie",
+        "ru": "Зарядка",
+        "ko": "충전 중"
+      }
+    },
+    {
+      "id": "4",
+      "title": {
+        "en": "Suspended EVSE",
+        "nl": "Opgeschort EVSE",
+        "da": "Suspenderet EVSE",
+        "de": "Suspended EVSE",
+        "es": "Suspendido EVSE",
+        "fr": "Suspendu EVSE",
+        "it": "Sospeso EVSE",
+        "no": "Suspendert EVSE",
+        "sv": "Pausad EVSE",
+        "pl": "Zawieszono EVSE",
+        "ru": "Приостановлено EVSE",
+        "ko": "중단된 EVSE"
+      }
+    },
+    {
+      "id": "5",
+      "title": {
+        "en": "Suspended EV",
+        "nl": "Opgeschort EV",
+        "da": "Suspenderet EV",
+        "de": "Suspended EV",
+        "es": "Suspendido EV",
+        "fr": "Suspendu EV",
+        "it": "Sospeso EV",
+        "no": "Suspendert EV",
+        "sv": "Pausad EV",
+        "pl": "Zawieszono EV",
+        "ru": "Приостановлено EV",
+        "ko": "중단된 EV"
+      }
+    },
+    {
+      "id": "6",
+      "title": {
+        "en": "Finished",
+        "nl": "Voltooid",
+        "da": "Færdig",
+        "de": "Beendet",
+        "es": "Terminado",
+        "fr": "Terminé",
+        "it": "Completato",
+        "no": "Fullført",
+        "sv": "Avslutad",
+        "pl": "Zakończono",
+        "ru": "Завершено",
+        "ko": "완료"
+      }
+    },
+    {
+      "id": "9",
+      "title": {
+        "en": "Faulted",
+        "nl": "Fout",
+        "da": "Fejl",
+        "de": "Fehlerhaft",
+        "es": "Con errores",
+        "fr": "Défaillant",
+        "it": "Guasto",
+        "no": "Feil",
+        "sv": "Fel",
+        "pl": "Uszkodzony",
+        "ru": "Неисправность",
+        "ko": "결함 있음"
+      }
+    }
+  ],
+  "icon": "/assets/icons/mode.svg"
+}

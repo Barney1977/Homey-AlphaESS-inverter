@@ -1,39 +1,71 @@
 'use strict';
 
-const Modbus = require('jsmodbus');
-const net = require('net');
-const DEFAULT_REGISTERS = require('./register.json');
+import { Socket } from 'net';
+import { ModbusTCPClient } from 'jsmodbus';
+
+type Register = {
+  intRegister: number,
+  register: string,
+  // eslint-disable-next-line camelcase
+  name_en: string,
+  unit: string,
+  type: 'string' | 'uint16be' | 'int16be' | 'uint32be' | 'int32be',
+  len: number,
+  factor: number,
+  bits?: string[],
+  enum?: {
+    value: number,
+    // eslint-disable-next-line camelcase
+    name_en: string,
+  }[],
+  // eslint-disable-next-line camelcase
+  frontend_type: 'state' | 'enum' | 'bits'
+}
+
+const DEFAULT_REGISTERS: Register[] = require('./register.json');
 
 const UNIT_ID = 85;
 const PORT = 502;
 
-function dec2bin(dec) {
+function dec2bin(dec: number) {
   return (dec >>> 0).toString(2);
 }
 
-class ModbusReader {
+export type ModbusResult = {
+  [details: string]: {
+    name: string,
+    unit: string,
+    value?: string | null | number,
+    // eslint-disable-next-line camelcase
+    value_string?: string,
+    // eslint-disable-next-line camelcase
+    value_name?: string,
+  };
+}
 
-  port = null;
-  host = null;
+export class ModbusReader {
+
+  port;
+  host;
 
   socket = null;
   client = null;
 
-  constructor(host, port = PORT) {
+  constructor(host: string, port: number = PORT) {
     this.host = host;
     this.port = port || PORT;
   }
 
-  async readOnce(registers = DEFAULT_REGISTERS) {
+  async readOnce(registers = DEFAULT_REGISTERS): Promise<ModbusResult> {
     return new Promise((resolve, reject) => {
-      const socket = new net.Socket();
-      const client = new Modbus.client.TCP(socket, UNIT_ID);
+      const socket = new Socket();
+      const client = new ModbusTCPClient(socket, UNIT_ID);
 
       socket.on('error', reject);
 
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       socket.on('connect', async () => {
-        const result = {};
+        const result: ModbusResult = {};
 
         try {
           for (const reg of registers) {
@@ -63,7 +95,7 @@ class ModbusReader {
                 break;
 
               default:
-                reject(new Error('Unkonw type ' || reg.type));
+                reject(new Error(`Unkonw type ${reg.type}`));
             }
 
             result[reg.register] = {
@@ -76,18 +108,18 @@ class ModbusReader {
             }
 
             if (reg.frontend_type === 'bits') {
-              const bitstr = dec2bin(val).padStart(reg.len * 16, '0');
+              const bitstr = dec2bin(val as number).padStart(reg.len * 16, '0');
 
               result[reg.register].value = bitstr;
-              result[reg.register].value_string = reg.bits.map((e, i) => {
+              result[reg.register].value_string = reg.bits?.map((e, i) => {
                 return bitstr[bitstr.length - i - 1] === '1' ? e : null;
               }).filter((e) => e).join(',');
             } else if (reg.frontend_type === 'enum') {
-              const enumVal = reg.enum.find((e) => e.value === val);
+              const enumVal = reg.enum?.find((e) => e.value === val);
               result[reg.register].value = val;
-              result[reg.register].value_name = enumVal ? enumVal.name_en : val.toString();
+              result[reg.register].value_name = enumVal ? enumVal.name_en : val?.toString();
             } else {
-              result[reg.register].value = val * (reg.factor ?? 1);
+              result[reg.register].value = (val as number) * (reg.factor ?? 1);
             }
           }
 
@@ -107,5 +139,3 @@ class ModbusReader {
   }
 
 }
-
-module.exports = ModbusReader;

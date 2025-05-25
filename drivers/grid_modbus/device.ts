@@ -1,30 +1,28 @@
 'use strict';
 
 import BaseDevice from '../baseModbusDevice';
-
-function formatBit(b) {
-  if (!b || b === '') return '-';
-  return b;
-}
+import { formatBit } from '../../utils/formatBit';
+import { ModbusResult } from '../../modbus/reader';
+import { FlowCardTrigger } from 'homey';
 
 class GridDevice extends BaseDevice {
 
-  flowTrigger;
+  stateFlowTrigger!: FlowCardTrigger;
 
   async onInit() {
     await super.onInit();
-    this.flowTrigger = this.homey.flow.getTriggerCard('alpha_state_changed');
+    this.stateFlowTrigger = this.homey.flow.getTriggerCard('alpha_state_changed');
   }
 
-  async setCapabilities(data) {
+  async setCapabilities(data: ModbusResult) {
     // const pv = data['0x41F'].value
     //   + data['0x423'].value
     //   + data['0x427'].value
     //   + data['0x429'].value;
 
-    const grid = data['0x21'].value;
-    const inverter = data['0x40C'].value;
-    const battery = data['0x126'].value;
+    const grid = data['0x21'].value as number;
+    const inverter = data['0x40C'].value as number;
+    const battery = data['0x126'].value as number;
 
     let load = 0;
 
@@ -38,7 +36,7 @@ class GridDevice extends BaseDevice {
     this.log('grid;', grid, 'inverter:', inverter, 'battery:', battery, 'load:', load);
 
     const oldState = this.getCapabilityValue('alpha_state');
-    const newState = `${data['0x440'].value}`;
+    const newState = `${data['0x440'].value}` as string;
 
     await Promise.all([
       this.setCapabilityValue('measure_power', grid),
@@ -53,8 +51,8 @@ class GridDevice extends BaseDevice {
 
       this.setCapabilityValue('alpha_state', newState),
 
-      this.setCapabilityValue('alarm_power', newState === 2 || newState === 3),
-      this.setCapabilityValue('alarm_generic', newState === 4),
+      this.setCapabilityValue('alarm_power', newState === '2' || newState === '3'),
+      this.setCapabilityValue('alarm_generic', newState === '4'),
 
       this.setCapabilityValue('alpha_fault_text.fault1', formatBit(data['0x43A'].value_string)),
       this.setCapabilityValue('alpha_fault_text.fault2', formatBit(data['0x43C'].value_string)),
@@ -67,7 +65,7 @@ class GridDevice extends BaseDevice {
 
     if (oldState !== newState) {
       this.log('Triggering alpha_state_changed');
-      await this.flowTrigger.trigger({
+      await this.stateFlowTrigger.trigger({
         alpha_state: data['0x440'].value_name,
       });
     }

@@ -1,22 +1,27 @@
 'use strict';
 
-import BaseDevice from '../baseModbusDevice';
+import ModbusBaseDevice from '../baseModbusDevice';
+import { powerToBatteryState } from '../../utils/batteryState';
+import { formatBit } from '../../utils/formatBit';
+import { ModbusResult } from '../../modbus/reader';
 
-function formatBit(b) {
-  if (!b || b === '') return '-';
-  return b;
-}
-
-class BatteryDevice extends BaseDevice {
+class BatteryDevice extends ModbusBaseDevice {
 
   async onInit() {
     await super.onInit();
+
+    if (this.hasCapability('battery_charging_state')) {
+      await this.addCapability('battery_charging_state');
+    }
   }
 
-  async setCapabilities(data) {
+  async setCapabilities(data: ModbusResult) {
     await Promise.all([
       this.setCapabilityValue('measure_battery', data['0x102'].value),
       this.setCapabilityValue('measure_power', data['0x126'].value),
+
+      this.setCapabilityValue('battery_charging_state', powerToBatteryState(data['0x126'].value as number)),
+
       this.setCapabilityValue('alarm_battery', data['0x11C'].value !== '00000000000000000000000000000000' || data['0x11E'].value !== '00000000000000000000000000000000'),
       this.setCapabilityValue('alpha_fault_text.warning', formatBit(data['0x11C'].value_string)),
       this.setCapabilityValue('alpha_fault_text.fault', formatBit(data['0x11E'].value_string)),

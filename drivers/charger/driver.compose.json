@@ -1,0 +1,48 @@
+{
+  "name": {
+    "en": "AlphaESS charger",
+    "nl": "AlphaESS Oplader",
+    "da": "AlphaESS Oplader",
+    "de": "AlphaESS Ladegerät",
+    "es": "Cargador AlphaESS",
+    "fr": "Chargeur AlphaESS",
+    "it": "Caricatore AlphaESS",
+    "no": "AlphaESS Lader",
+    "sv": "AlphaESS Laddare",
+    "pl": "Ładowarka AlphaESS",
+    "ru": "Зарядное устройство AlphaESS",
+    "ko": "AlphaESS 충전기"
+  },
+  "class": "evcharger",
+  "capabilities": [
+    "measure_power",
+    "meter_power",
+    "measure_power.ev1",
+    "measure_power.ev2",
+    "measure_power.ev3",
+    "measure_power.ev4",
+    "alpha_charger_state",
+    "onoff"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "drivers/charger/assets/images/small.png",
+    "large": "drivers/charger/assets/images/large.png",
+    "xlarge": "drivers/charger/assets/images/xlarge.png"
+  }
+}

@@ -1,10 +1,11 @@
 'use strict';
 
+import { EssListResponseElement } from '../../api/responseTypes';
 import BaseDriver from '../baseDriver';
 
 class PanelsDriver extends BaseDriver {
 
-  getName(data) {
+  getName(data: EssListResponseElement) {
     return 'Solarpanels';
   }
 

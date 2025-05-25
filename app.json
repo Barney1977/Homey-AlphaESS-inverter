@@ -79,7 +79,8 @@
       "class": "battery",
       "capabilities": [
         "measure_battery",
-        "measure_power"
+        "measure_power",
+        "battery_charging_state"
       ],
       "energy": {
         "homeBattery": true,
@@ -203,7 +204,8 @@
         "alpha_fault_text.fault",
         "meter_power.charged",
         "meter_power.discharged",
-        "meter_power.grid"
+        "meter_power.grid",
+        "battery_charging_state"
       ],
       "capabilitiesOptions": {
         "alpha_fault_text.warning": {
@@ -295,7 +297,9 @@
           "OTHER"
         ],
         "homeBattery": true,
-        "cumulative": true
+        "cumulative": true,
+        "meterPowerExportedCapability": "meter_power.discharged",
+        "meterPowerImportedCapability": "meter_power.charged"
       },
       "platforms": [
         "local"
@@ -388,6 +392,133 @@
             "pl": "odświeżanie co kilka sekund, minimum raz na sekundę",
             "ru": "интервал обновления в секундах, минимум раз в секунду",
             "ko": "최소 1초에 한 번씩 새로고침 간격 (초)"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "AlphaESS charger",
+        "nl": "AlphaESS Oplader",
+        "da": "AlphaESS Oplader",
+        "de": "AlphaESS Ladegerät",
+        "es": "Cargador AlphaESS",
+        "fr": "Chargeur AlphaESS",
+        "it": "Caricatore AlphaESS",
+        "no": "AlphaESS Lader",
+        "sv": "AlphaESS Laddare",
+        "pl": "Ładowarka AlphaESS",
+        "ru": "Зарядное устройство AlphaESS",
+        "ko": "AlphaESS 충전기"
+      },
+      "class": "evcharger",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_power.ev1",
+        "measure_power.ev2",
+        "measure_power.ev3",
+        "measure_power.ev4",
+        "alpha_charger_state",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "drivers/charger/assets/images/small.png",
+        "large": "drivers/charger/assets/images/large.png",
+        "xlarge": "drivers/charger/assets/images/xlarge.png"
+      },
+      "id": "charger",
+      "settings": [
+        {
+          "id": "sysSn",
+          "type": "text",
+          "label": {
+            "en": "sysSn",
+            "nl": "sysSn",
+            "da": "sysSn",
+            "de": "sysSn",
+            "es": "sysSn",
+            "fr": "sysSn",
+            "it": "sysSn",
+            "no": "sysSn",
+            "sv": "sysSn",
+            "pl": "sysSn",
+            "ru": "sysSn",
+            "ko": "sysSn"
+          },
+          "value": "ALB0020.....",
+          "hint": {
+            "en": "The sysSn of your device",
+            "nl": "De sysSn van je apparaat",
+            "da": "Enhedens sysSn",
+            "de": "Die sysSn Ihres Geräts",
+            "es": "El sysSn de tu dispositivo",
+            "fr": "Le sysSn de votre appareil",
+            "it": "Il sysSn del tuo dispositivo",
+            "no": "Enhetens sysSn",
+            "sv": "Enhetens sysSn",
+            "pl": "SysSn twojego urządzenia",
+            "ru": "SysSn вашего устройства",
+            "ko": "장치의 sysSn"
+          }
+        },
+        {
+          "id": "evchargerSn",
+          "type": "text",
+          "label": {
+            "en": "evchargerSn"
+          },
+          "hint": {
+            "en": "The serial of your charger"
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Interval",
+            "nl": "Interval",
+            "da": "Interval",
+            "de": "Intervall",
+            "es": "Intervalo",
+            "fr": "Intervalle",
+            "it": "Intervallo",
+            "no": "Intervall",
+            "sv": "Intervall",
+            "pl": "Interwał",
+            "ru": "Интервал",
+            "ko": "간격"
+          },
+          "value": 30,
+          "hint": {
+            "en": "the refresh interval in seconds, minimum once every 10 seconds",
+            "nl": "het vernieuwingsinterval in seconden, minimaal eenmaal per 10 seconden",
+            "da": "opdateringsintervallet i sekunder, mindst én gang hvert 10. sekund",
+            "de": "Das Aktualisierungsintervall in Sekunden, mindestens einmal alle 10 Sekunden",
+            "es": "el intervalo de actualización en segundos, al menos una vez cada 10 segundos",
+            "fr": "l'intervalle de rafraîchissement en secondes, au minimum une fois toutes les 10 secondes",
+            "it": "l'intervallo di aggiornamento in secondi, minimo una volta ogni 10 secondi",
+            "no": "oppdateringsintervallet i sekunder, minst en gang hvert 10. sekund",
+            "sv": "uppdateringsintervallet i sekunder, minst en gång var 10:e sekund",
+            "pl": "interwał odświeżania w sekundach, minimum raz na 10 sekund",
+            "ru": "интервал обновления в секундах, минимум раз в 10 секунд",
+            "ko": "10초마다 최소 한 번씩의 새로고침 간격(초)"
           }
         }
       ]
@@ -1285,6 +1416,64 @@
   "flow": {
     "triggers": [
       {
+        "id": "alpha_charger_state_changed",
+        "title": {
+          "en": "The charger state changed",
+          "nl": "De laadstatus is veranderd",
+          "da": "Opladerens tilstand ændret",
+          "de": "Der Ladezustand hat sich geändert",
+          "es": "El estado del cargador cambió",
+          "fr": "L'état du chargeur a changé",
+          "it": "Lo stato del caricatore è cambiato",
+          "no": "Laderens tilstand har endret seg",
+          "sv": "Laddstatusen har ändrats",
+          "pl": "Stan ładowarki został zmieniony",
+          "ru": "Состояние зарядного устройства изменилось",
+          "ko": "충전기 상태가 변경되었습니다"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "alpha_charger_state",
+            "title": {
+              "en": "Charger state",
+              "nl": "Laadstatus",
+              "da": "Opladerens tilstand",
+              "de": "Ladezustand",
+              "es": "Estado del cargador",
+              "fr": "État du chargeur",
+              "it": "Stato del caricatore",
+              "no": "Laderens tilstand",
+              "sv": "Laddstatus",
+              "pl": "Stan ładowarki",
+              "ru": "Состояние зарядного устройства",
+              "ko": "충전기 상태"
+            },
+            "example": {
+              "en": "1 .. 6, 9",
+              "nl": "1 .. 6, 9",
+              "da": "1 .. 6, 9",
+              "de": "1 .. 6, 9",
+              "es": "1 .. 6, 9",
+              "fr": "1 .. 6, 9",
+              "it": "1 .. 6, 9",
+              "no": "1 .. 6, 9",
+              "sv": "1 .. 6, 9",
+              "pl": "1 .. 6, 9",
+              "ru": "1 .. 6, 9",
+              "ko": "1 .. 6, 9"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=charger"
+          }
+        ]
+      },
+      {
         "id": "alpha_state_changed",
         "title": {
           "en": "The work mode changed",
@@ -1345,6 +1534,148 @@
     ]
   },
   "capabilities": {
+    "alpha_charger_state": {
+      "type": "enum",
+      "title": {
+        "en": "EV Charger Mode",
+        "nl": "EV-oplader Modus",
+        "da": "EV-oplader Tilstand",
+        "de": "EV-Ladegeräte-Modus",
+        "es": "Modo de cargador EV",
+        "fr": "Mode de chargeur EV",
+        "it": "Modalità Caricatore EV",
+        "no": "EV-lader Modus",
+        "sv": "EV-laddare Läge",
+        "pl": "Tryb ładowarki EV",
+        "ru": "Режим зарядного устройства EV",
+        "ko": "EV 충전기 모드"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "1",
+          "title": {
+            "en": "Available",
+            "nl": "Beschikbaar",
+            "da": "Tilgængelig",
+            "de": "Verfügbar",
+            "es": "Disponible",
+            "fr": "Disponible",
+            "it": "Disponibile",
+            "no": "Tilgjengelig",
+            "sv": "Tillgänglig",
+            "pl": "Dostępny",
+            "ru": "Доступен",
+            "ko": "사용 가능"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Preparing",
+            "nl": "Aan het voorbereiden",
+            "da": "Forbereder",
+            "de": "Vorbereiten",
+            "es": "Preparando",
+            "fr": "Préparation",
+            "it": "Preparazione",
+            "no": "Forbereder",
+            "sv": "Förbereder",
+            "pl": "Przygotowanie",
+            "ru": "Подготовка",
+            "ko": "준비 중"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "Charging",
+            "nl": "Opladen",
+            "da": "Opladning",
+            "de": "Laden",
+            "es": "Cargando",
+            "fr": "Chargement",
+            "it": "Caricamento",
+            "no": "Lader",
+            "sv": "Laddar",
+            "pl": "Ładowanie",
+            "ru": "Зарядка",
+            "ko": "충전 중"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "Suspended EVSE",
+            "nl": "Opgeschort EVSE",
+            "da": "Suspenderet EVSE",
+            "de": "Suspended EVSE",
+            "es": "Suspendido EVSE",
+            "fr": "Suspendu EVSE",
+            "it": "Sospeso EVSE",
+            "no": "Suspendert EVSE",
+            "sv": "Pausad EVSE",
+            "pl": "Zawieszono EVSE",
+            "ru": "Приостановлено EVSE",
+            "ko": "중단된 EVSE"
+          }
+        },
+        {
+          "id": "5",
+          "title": {
+            "en": "Suspended EV",
+            "nl": "Opgeschort EV",
+            "da": "Suspenderet EV",
+            "de": "Suspended EV",
+            "es": "Suspendido EV",
+            "fr": "Suspendu EV",
+            "it": "Sospeso EV",
+            "no": "Suspendert EV",
+            "sv": "Pausad EV",
+            "pl": "Zawieszono EV",
+            "ru": "Приостановлено EV",
+            "ko": "중단된 EV"
+          }
+        },
+        {
+          "id": "6",
+          "title": {
+            "en": "Finished",
+            "nl": "Voltooid",
+            "da": "Færdig",
+            "de": "Beendet",
+            "es": "Terminado",
+            "fr": "Terminé",
+            "it": "Completato",
+            "no": "Fullført",
+            "sv": "Avslutad",
+            "pl": "Zakończono",
+            "ru": "Завершено",
+            "ko": "완료"
+          }
+        },
+        {
+          "id": "9",
+          "title": {
+            "en": "Faulted",
+            "nl": "Fout",
+            "da": "Fejl",
+            "de": "Fehlerhaft",
+            "es": "Con errores",
+            "fr": "Défaillant",
+            "it": "Guasto",
+            "no": "Feil",
+            "sv": "Fel",
+            "pl": "Uszkodzony",
+            "ru": "Неисправность",
+            "ko": "결함 있음"
+          }
+        }
+      ],
+      "icon": "/assets/icons/mode.svg"
+    },
     "alpha_fault_text": {
       "type": "string",
       "title": {

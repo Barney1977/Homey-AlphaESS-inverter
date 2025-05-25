@@ -22,7 +22,8 @@
     "alpha_fault_text.fault",
     "meter_power.charged",
     "meter_power.discharged",
-    "meter_power.grid"
+    "meter_power.grid",
+    "battery_charging_state"
   ],
   "capabilitiesOptions": {
     "alpha_fault_text.warning": {
@@ -114,7 +115,9 @@
       "OTHER"
     ],
     "homeBattery": true,
-    "cumulative": true
+    "cumulative": true,
+    "meterPowerExportedCapability": "meter_power.discharged",
+    "meterPowerImportedCapability": "meter_power.charged"
   },
   "platforms": [
     "local"

@@ -16,7 +16,8 @@
   "class": "battery",
   "capabilities": [
     "measure_battery",
-    "measure_power"
+    "measure_power",
+    "battery_charging_state"
   ],
   "energy": {
     "homeBattery": true,

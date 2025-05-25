@@ -1,18 +1,18 @@
 'use strict';
 
-const events = require('events');
-const Reader = require('./reader');
+import { EventEmitter } from 'events';
+import { ModbusReader } from './reader';
 
 const INTERVAL = 10 * 1000;
 
-class ModbusEventEmitter extends events.EventEmitter {
+export default class ModbusEventEmitter extends EventEmitter {
 
-  reader = null;
-  pollingTask = null;
+  reader;
+  pollingTask: string | number | NodeJS.Timeout | undefined;
 
-  constructor(host, port) {
+  constructor(host: string, port?: number) {
     super();
-    this.reader = new Reader(host, port);
+    this.reader = new ModbusReader(host, port);
   }
 
   id() {
@@ -42,5 +42,3 @@ class ModbusEventEmitter extends events.EventEmitter {
   }
 
 }
-
-module.exports = ModbusEventEmitter;

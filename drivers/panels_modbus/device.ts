@@ -1,5 +1,6 @@
 'use strict';
 
+import { ModbusResult } from '../../modbus/reader';
 import BaseDevice from '../baseModbusDevice';
 
 class PanelDevice extends BaseDevice {
@@ -8,11 +9,11 @@ class PanelDevice extends BaseDevice {
     await super.onInit();
   }
 
-  async setCapabilities(data) {
-    const total = data['0x41F'].value
-      + data['0x423'].value
-      + data['0x427'].value
-      + data['0x429'].value;
+  async setCapabilities(data: ModbusResult) {
+    const total = (data['0x41F'].value as number)
+      + (data['0x423'].value as number)
+      + (data['0x427'].value as number)
+      + (data['0x429'].value as number);
 
     await Promise.all([
       this.setCapabilityValue('measure_power', total),

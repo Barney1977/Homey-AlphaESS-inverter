@@ -1,42 +1,43 @@
 'use strict';
 
-const Homey = require('homey');
-const Mutex = require('../modbus/mutex');
-const ModbusEventEmitter = require('../modbus/emitter');
+import { Device } from 'homey';
+import Mutex from '../modbus/mutex';
+import ModbusEventEmitter from '../modbus/emitter';
+import { ModbusResult } from '../modbus/reader';
 
-const EMITTERS = {};
+const EMITTERS: { [key: string]: { count: number, instance: ModbusEventEmitter } } = {};
 const mutex = new Mutex();
 
-async function getInstance(name, construct) {
+async function getInstance(name: string, construct: () => ModbusEventEmitter) {
   const unlock = await mutex.lock();
   try {
-    let inst = EMITTERS[name];
+    const inst = EMITTERS[name];
     if (inst) {
       inst.count += 1;
       return inst.instance;
     }
 
-    inst = construct();
+    const newInst = construct();
 
     EMITTERS[name] = {
       count: 1,
-      instance: inst,
+      instance: newInst,
     };
 
-    return inst;
+    return newInst;
   } finally {
     unlock();
   }
 }
 
-async function destroyInstance(name) {
+async function destroyInstance(name: string) {
   const unlock = await mutex.lock();
   try {
     const inst = EMITTERS[name];
     inst.count -= 1;
 
-    if (inst === 0) {
-      inst.stop();
+    if (inst.count === 0) {
+      inst.instance.stop();
       delete EMITTERS[name];
     }
   } finally {
@@ -44,11 +45,11 @@ async function destroyInstance(name) {
   }
 }
 
-class ModbusBaseDevice extends Homey.Device {
+export default class ModbusBaseDevice extends Device {
 
-  emitter = null;
-  errorEmitter;
-  dataEmitter;
+  emitter?: ModbusEventEmitter;
+  errorEmitter?: (e: unknown) => void;
+  dataEmitter?: (data: unknown) => unknown;
 
   async onInit() {
     this.log('Device has been initialized');
@@ -62,12 +63,12 @@ class ModbusBaseDevice extends Homey.Device {
   async cleanup() {
     // Clear any existing intervals
     if (this.emitter) {
-      this.emitter.off('error', this.errorEmitter);
-      this.emitter.off('data', this.dataEmitter);
+      this.emitter.off('error', this.errorEmitter!);
+      this.emitter.off('data', this.dataEmitter!);
 
       await destroyInstance(this.emitter.id());
 
-      this.emitter = null;
+      this.emitter = undefined;
     }
   }
 
@@ -92,7 +93,7 @@ class ModbusBaseDevice extends Homey.Device {
     this.dataEmitter = async (data) => {
       // this.log(data);
       this.log('Received data');
-      await this.setCapabilities(data);
+      await this.setCapabilities(data as ModbusResult);
     };
 
     this.emitter.on('error', this.errorEmitter);
@@ -103,7 +104,7 @@ class ModbusBaseDevice extends Homey.Device {
   }
 
   // eslint-disable-next-line no-empty-function
-  async setCapabilities(data) { }
+  async setCapabilities(data: ModbusResult) { }
 
   onDeleted() {
     this.log('Device has been deleted');
@@ -113,5 +114,3 @@ class ModbusBaseDevice extends Homey.Device {
   }
 
 }
-
-module.exports = ModbusBaseDevice;
