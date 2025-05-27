@@ -5,17 +5,16 @@ import BaseDevice from '../baseDevice';
 import {
   Requests, postApi,
 } from '../../api/requests';
-import { EvChargerStatus, EvChargerStatusBySnData, LastPowerData, OneDateEnergyBySnData, ReturnData } from '../../api/responseTypes';
+import {
+  EvChargerStatus, EvChargerStatusBySnData, LastPowerData, OneDateEnergyBySnData, ReturnData,
+} from '../../api/responseTypes';
 
 class ChargerDevice extends BaseDevice {
-
-  stateFlowTrigger!: FlowCardTrigger;
 
   async onInit() {
     await super.onInit();
 
-    await this.registerCapabilityListener('onoff', (val) => this.controlState(val));
-    this.stateFlowTrigger = this.homey.flow.getTriggerCard('alpha_charger_state_changed');
+    await this.registerCapabilityListener('evcharger_charging', (val) => this.controlState(val));
   }
 
   async controlState(on: boolean) {
@@ -42,6 +41,24 @@ class ChargerDevice extends BaseDevice {
     }
   }
 
+  convertState(s?: EvChargerStatus): string {
+    switch (s) {
+      case EvChargerStatus.Charging:
+        return 'plugged_in_charging';
+
+      case EvChargerStatus.SuspendedEV:
+      case EvChargerStatus.SuspendedEVSE:
+        return 'plugged_in_paused';
+
+      case EvChargerStatus.Preparing:
+        return 'plugged_in';
+
+      // case EvChargerStatus.Available:
+      default:
+        return 'plugged_out';
+    }
+  }
+
   async task() {
     const base = super.task();
 
@@ -54,21 +71,14 @@ class ChargerDevice extends BaseDevice {
     }
 
     const evChargerStatus = await this.fetchData<EvChargerStatusBySnData>(Requests.EvChargerStatusBySn, { sysSn, evchargerSn });
-    const oldChargerState = this.getCapabilityValue('alpha_charger_state');
-    const newChargerState = evChargerStatus ? evChargerStatus.evchargerStatus.toString() : null;
+    const newChargerState = evChargerStatus ? evChargerStatus.evchargerStatus : undefined;
 
-    if (oldChargerState !== newChargerState) {
-      await this.setCapabilityValue('alpha_charger_state', newChargerState);
-      await this.stateFlowTrigger.trigger({
-        alpha_charger_state: newChargerState,
-      });
-    }
+    await this.setCapabilityValue('evcharger_charging_state', this.convertState(newChargerState));
+    await this.setCapabilityValue('evcharger_charging', newChargerState === EvChargerStatus.Charging);
 
-    await this.setCapabilityValue('onoff', newChargerState === EvChargerStatus.Charging.toString());
-
-    const ts = new Date().toISOString().substring(0, 10);
-    const energy = await this.fetchData<OneDateEnergyBySnData>(Requests.OneDateEnergyBySn, { sysSn, queryDate: ts });
-    await this.setCapabilityValue('meter_power', energy?.eChargingPile);
+    const queryDate = new Date().toISOString().substring(0, 10);
+    const energy = await this.fetchData<OneDateEnergyBySnData>(Requests.OneDateEnergyBySn, { sysSn, queryDate });
+    await this.setCapabilityValue('meter_power.charged', energy?.eChargingPile);
 
     await base;
   }

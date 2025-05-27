@@ -15,15 +15,85 @@
   },
   "class": "evcharger",
   "capabilities": [
+    "meter_power.charged",
     "measure_power",
-    "meter_power",
     "measure_power.ev1",
     "measure_power.ev2",
     "measure_power.ev3",
     "measure_power.ev4",
-    "alpha_charger_state",
-    "onoff"
+    "evcharger_charging",
+    "evcharger_charging_state"
   ],
+  "energy": {
+    "evCharger": true,
+    "meterPowerImportedCapability": "meter_power.charged"
+  },
+  "capabilitiesOptions": {
+    "measure_power.ev1": {
+      "title": {
+        "en": "Power EV1",
+        "nl": "Vermogen EV1",
+        "da": "Effekt EV1",
+        "de": "Leistung EV1",
+        "es": "Potencia EV1",
+        "fr": "Puissance EV1",
+        "it": "Potenza EV1",
+        "no": "Effekt EV1",
+        "sv": "Effekt EV1",
+        "pl": "Moc EV1",
+        "ru": "Мощность EV1",
+        "ko": "전력 EV1"
+      }
+    },
+    "measure_power.ev2": {
+      "title": {
+        "en": "Power EV2",
+        "nl": "Vermogen EV2",
+        "da": "Effekt EV2",
+        "de": "Leistung EV2",
+        "es": "Potencia EV2",
+        "fr": "Puissance EV2",
+        "it": "Potenza EV2",
+        "no": "Effekt EV2",
+        "sv": "Effekt EV2",
+        "pl": "Moc EV2",
+        "ru": "Мощность EV2",
+        "ko": "전력 EV2"
+      }
+    },
+    "measure_power.ev3": {
+      "title": {
+        "en": "Power EV3",
+        "nl": "Vermogen EV3",
+        "da": "Effekt EV3",
+        "de": "Leistung EV3",
+        "es": "Potencia EV3",
+        "fr": "Puissance EV3",
+        "it": "Potenza EV3",
+        "no": "Effekt EV3",
+        "sv": "Effekt EV3",
+        "pl": "Moc EV3",
+        "ru": "Мощность EV3",
+        "ko": "전력 EV3"
+      }
+    },
+    "measure_power.ev4": {
+      "title": {
+        "en": "Power EV4",
+        "nl": "Vermogen EV4",
+        "da": "Effekt EV4",
+        "de": "Leistung EV4",
+        "es": "Potencia EV4",
+        "fr": "Puissance EV4",
+        "it": "Potenza EV4",
+        "no": "Effekt EV4",
+        "sv": "Effekt EV4",
+        "pl": "Moc EV4",
+        "ru": "Мощность EV4",
+        "ko": "전력 EV4"
+      }
+    }
+  },
   "platforms": [
     "local"
   ],

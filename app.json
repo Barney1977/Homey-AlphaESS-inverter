@@ -2,7 +2,7 @@
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.aboreaon.alpaess",
   "version": "1.0.0",
-  "compatibility": ">=12.2.0",
+  "compatibility": ">=12.4.5",
   "sdk": 3,
   "platforms": [
     "local"
@@ -299,7 +299,8 @@
         "homeBattery": true,
         "cumulative": true,
         "meterPowerExportedCapability": "meter_power.discharged",
-        "meterPowerImportedCapability": "meter_power.charged"
+        "meterPowerImportedCapability": "meter_power.charged",
+        "cumulativeImportedCapability": "meter_power.grid"
       },
       "platforms": [
         "local"
@@ -413,15 +414,85 @@
       },
       "class": "evcharger",
       "capabilities": [
+        "meter_power.charged",
         "measure_power",
-        "meter_power",
         "measure_power.ev1",
         "measure_power.ev2",
         "measure_power.ev3",
         "measure_power.ev4",
-        "alpha_charger_state",
-        "onoff"
+        "evcharger_charging",
+        "evcharger_charging_state"
       ],
+      "energy": {
+        "evCharger": true,
+        "meterPowerImportedCapability": "meter_power.charged"
+      },
+      "capabilitiesOptions": {
+        "measure_power.ev1": {
+          "title": {
+            "en": "Power EV1",
+            "nl": "Vermogen EV1",
+            "da": "Effekt EV1",
+            "de": "Leistung EV1",
+            "es": "Potencia EV1",
+            "fr": "Puissance EV1",
+            "it": "Potenza EV1",
+            "no": "Effekt EV1",
+            "sv": "Effekt EV1",
+            "pl": "Moc EV1",
+            "ru": "Мощность EV1",
+            "ko": "전력 EV1"
+          }
+        },
+        "measure_power.ev2": {
+          "title": {
+            "en": "Power EV2",
+            "nl": "Vermogen EV2",
+            "da": "Effekt EV2",
+            "de": "Leistung EV2",
+            "es": "Potencia EV2",
+            "fr": "Puissance EV2",
+            "it": "Potenza EV2",
+            "no": "Effekt EV2",
+            "sv": "Effekt EV2",
+            "pl": "Moc EV2",
+            "ru": "Мощность EV2",
+            "ko": "전력 EV2"
+          }
+        },
+        "measure_power.ev3": {
+          "title": {
+            "en": "Power EV3",
+            "nl": "Vermogen EV3",
+            "da": "Effekt EV3",
+            "de": "Leistung EV3",
+            "es": "Potencia EV3",
+            "fr": "Puissance EV3",
+            "it": "Potenza EV3",
+            "no": "Effekt EV3",
+            "sv": "Effekt EV3",
+            "pl": "Moc EV3",
+            "ru": "Мощность EV3",
+            "ko": "전력 EV3"
+          }
+        },
+        "measure_power.ev4": {
+          "title": {
+            "en": "Power EV4",
+            "nl": "Vermogen EV4",
+            "da": "Effekt EV4",
+            "de": "Leistung EV4",
+            "es": "Potencia EV4",
+            "fr": "Puissance EV4",
+            "it": "Potenza EV4",
+            "no": "Effekt EV4",
+            "sv": "Effekt EV4",
+            "pl": "Moc EV4",
+            "ru": "Мощность EV4",
+            "ko": "전력 EV4"
+          }
+        }
+      },
       "platforms": [
         "local"
       ],
@@ -482,10 +553,32 @@
           "id": "evchargerSn",
           "type": "text",
           "label": {
-            "en": "evchargerSn"
+            "en": "evchargerSn",
+            "nl": "evchargerSn",
+            "da": "evchargerSn",
+            "de": "evchargerSn",
+            "es": "evchargerSn",
+            "fr": "evchargerSn",
+            "it": "evchargerSn",
+            "no": "evchargerSn",
+            "sv": "evchargerSn",
+            "pl": "evchargerSn",
+            "ru": "evchargerSn",
+            "ko": "evchargerSn"
           },
           "hint": {
-            "en": "The serial of your charger"
+            "en": "The serial of your charger",
+            "nl": "Het serienummer van je lader",
+            "da": "Serienummeret på din oplader",
+            "de": "Die Seriennummer Ihres Ladegeräts",
+            "es": "El número de serie de tu cargador",
+            "fr": "Le numéro de série de votre chargeur",
+            "it": "Il numero di serie del tuo caricabatterie",
+            "no": "Serienummeret på laderen din",
+            "sv": "Serienumret på din laddare",
+            "pl": "Numer seryjny ładowarki",
+            "ru": "Серийный номер вашего зарядного устройства",
+            "ko": "충전기의 일련 번호"
           }
         },
         {
@@ -1416,64 +1509,6 @@
   "flow": {
     "triggers": [
       {
-        "id": "alpha_charger_state_changed",
-        "title": {
-          "en": "The charger state changed",
-          "nl": "De laadstatus is veranderd",
-          "da": "Opladerens tilstand ændret",
-          "de": "Der Ladezustand hat sich geändert",
-          "es": "El estado del cargador cambió",
-          "fr": "L'état du chargeur a changé",
-          "it": "Lo stato del caricatore è cambiato",
-          "no": "Laderens tilstand har endret seg",
-          "sv": "Laddstatusen har ändrats",
-          "pl": "Stan ładowarki został zmieniony",
-          "ru": "Состояние зарядного устройства изменилось",
-          "ko": "충전기 상태가 변경되었습니다"
-        },
-        "tokens": [
-          {
-            "type": "string",
-            "name": "alpha_charger_state",
-            "title": {
-              "en": "Charger state",
-              "nl": "Laadstatus",
-              "da": "Opladerens tilstand",
-              "de": "Ladezustand",
-              "es": "Estado del cargador",
-              "fr": "État du chargeur",
-              "it": "Stato del caricatore",
-              "no": "Laderens tilstand",
-              "sv": "Laddstatus",
-              "pl": "Stan ładowarki",
-              "ru": "Состояние зарядного устройства",
-              "ko": "충전기 상태"
-            },
-            "example": {
-              "en": "1 .. 6, 9",
-              "nl": "1 .. 6, 9",
-              "da": "1 .. 6, 9",
-              "de": "1 .. 6, 9",
-              "es": "1 .. 6, 9",
-              "fr": "1 .. 6, 9",
-              "it": "1 .. 6, 9",
-              "no": "1 .. 6, 9",
-              "sv": "1 .. 6, 9",
-              "pl": "1 .. 6, 9",
-              "ru": "1 .. 6, 9",
-              "ko": "1 .. 6, 9"
-            }
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=charger"
-          }
-        ]
-      },
-      {
         "id": "alpha_state_changed",
         "title": {
           "en": "The work mode changed",
@@ -1534,148 +1569,6 @@
     ]
   },
   "capabilities": {
-    "alpha_charger_state": {
-      "type": "enum",
-      "title": {
-        "en": "EV Charger Mode",
-        "nl": "EV-oplader Modus",
-        "da": "EV-oplader Tilstand",
-        "de": "EV-Ladegeräte-Modus",
-        "es": "Modo de cargador EV",
-        "fr": "Mode de chargeur EV",
-        "it": "Modalità Caricatore EV",
-        "no": "EV-lader Modus",
-        "sv": "EV-laddare Läge",
-        "pl": "Tryb ładowarki EV",
-        "ru": "Режим зарядного устройства EV",
-        "ko": "EV 충전기 모드"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "values": [
-        {
-          "id": "1",
-          "title": {
-            "en": "Available",
-            "nl": "Beschikbaar",
-            "da": "Tilgængelig",
-            "de": "Verfügbar",
-            "es": "Disponible",
-            "fr": "Disponible",
-            "it": "Disponibile",
-            "no": "Tilgjengelig",
-            "sv": "Tillgänglig",
-            "pl": "Dostępny",
-            "ru": "Доступен",
-            "ko": "사용 가능"
-          }
-        },
-        {
-          "id": "2",
-          "title": {
-            "en": "Preparing",
-            "nl": "Aan het voorbereiden",
-            "da": "Forbereder",
-            "de": "Vorbereiten",
-            "es": "Preparando",
-            "fr": "Préparation",
-            "it": "Preparazione",
-            "no": "Forbereder",
-            "sv": "Förbereder",
-            "pl": "Przygotowanie",
-            "ru": "Подготовка",
-            "ko": "준비 중"
-          }
-        },
-        {
-          "id": "3",
-          "title": {
-            "en": "Charging",
-            "nl": "Opladen",
-            "da": "Opladning",
-            "de": "Laden",
-            "es": "Cargando",
-            "fr": "Chargement",
-            "it": "Caricamento",
-            "no": "Lader",
-            "sv": "Laddar",
-            "pl": "Ładowanie",
-            "ru": "Зарядка",
-            "ko": "충전 중"
-          }
-        },
-        {
-          "id": "4",
-          "title": {
-            "en": "Suspended EVSE",
-            "nl": "Opgeschort EVSE",
-            "da": "Suspenderet EVSE",
-            "de": "Suspended EVSE",
-            "es": "Suspendido EVSE",
-            "fr": "Suspendu EVSE",
-            "it": "Sospeso EVSE",
-            "no": "Suspendert EVSE",
-            "sv": "Pausad EVSE",
-            "pl": "Zawieszono EVSE",
-            "ru": "Приостановлено EVSE",
-            "ko": "중단된 EVSE"
-          }
-        },
-        {
-          "id": "5",
-          "title": {
-            "en": "Suspended EV",
-            "nl": "Opgeschort EV",
-            "da": "Suspenderet EV",
-            "de": "Suspended EV",
-            "es": "Suspendido EV",
-            "fr": "Suspendu EV",
-            "it": "Sospeso EV",
-            "no": "Suspendert EV",
-            "sv": "Pausad EV",
-            "pl": "Zawieszono EV",
-            "ru": "Приостановлено EV",
-            "ko": "중단된 EV"
-          }
-        },
-        {
-          "id": "6",
-          "title": {
-            "en": "Finished",
-            "nl": "Voltooid",
-            "da": "Færdig",
-            "de": "Beendet",
-            "es": "Terminado",
-            "fr": "Terminé",
-            "it": "Completato",
-            "no": "Fullført",
-            "sv": "Avslutad",
-            "pl": "Zakończono",
-            "ru": "Завершено",
-            "ko": "완료"
-          }
-        },
-        {
-          "id": "9",
-          "title": {
-            "en": "Faulted",
-            "nl": "Fout",
-            "da": "Fejl",
-            "de": "Fehlerhaft",
-            "es": "Con errores",
-            "fr": "Défaillant",
-            "it": "Guasto",
-            "no": "Feil",
-            "sv": "Fel",
-            "pl": "Uszkodzony",
-            "ru": "Неисправность",
-            "ko": "결함 있음"
-          }
-        }
-      ],
-      "icon": "/assets/icons/mode.svg"
-    },
     "alpha_fault_text": {
       "type": "string",
       "title": {

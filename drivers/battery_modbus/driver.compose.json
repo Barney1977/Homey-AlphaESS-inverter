@@ -117,7 +117,8 @@
     "homeBattery": true,
     "cumulative": true,
     "meterPowerExportedCapability": "meter_power.discharged",
-    "meterPowerImportedCapability": "meter_power.charged"
+    "meterPowerImportedCapability": "meter_power.charged",
+    "cumulativeImportedCapability": "meter_power.grid"
   },
   "platforms": [
     "local"

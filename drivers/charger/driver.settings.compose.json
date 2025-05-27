@@ -36,10 +36,32 @@
     "id": "evchargerSn",
     "type": "text",
     "label": {
-      "en": "evchargerSn"
+      "en": "evchargerSn",
+      "nl": "evchargerSn",
+      "da": "evchargerSn",
+      "de": "evchargerSn",
+      "es": "evchargerSn",
+      "fr": "evchargerSn",
+      "it": "evchargerSn",
+      "no": "evchargerSn",
+      "sv": "evchargerSn",
+      "pl": "evchargerSn",
+      "ru": "evchargerSn",
+      "ko": "evchargerSn"
     },
     "hint": {
-      "en": "The serial of your charger"
+      "en": "The serial of your charger",
+      "nl": "Het serienummer van je lader",
+      "da": "Serienummeret på din oplader",
+      "de": "Die Seriennummer Ihres Ladegeräts",
+      "es": "El número de serie de tu cargador",
+      "fr": "Le numéro de série de votre chargeur",
+      "it": "Il numero di serie del tuo caricabatterie",
+      "no": "Serienummeret på laderen din",
+      "sv": "Serienumret på din laddare",
+      "pl": "Numer seryjny ładowarki",
+      "ru": "Серийный номер вашего зарядного устройства",
+      "ko": "충전기의 일련 번호"
     }
   },
   {
