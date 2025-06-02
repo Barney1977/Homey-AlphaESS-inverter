@@ -108,7 +108,7 @@ export default class BaseDevice extends Device {
     }
 
     const sysSn = this.getSetting('sysSn');
-    this.log('Starting polling', interval, 'ms', 'sysSn', sysSn);
+    this.log('Starting polling', interval, 's', 'sysSn', sysSn);
 
     this.emitter = await getInstance(sysSn, () => new StatisticsEventEmitter(this.homey.settings, sysSn));
 
