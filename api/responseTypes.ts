@@ -49,6 +49,10 @@ export type OneDateEnergyBySnData = {
   theDate: string;
 };
 
+export type EvChargerCurrentsBySn = {
+  currentsetting: number;
+}
+
 export type LastPowerData = {
   ppv: number;
   ppvDetail: {
@@ -86,8 +90,27 @@ export type EvChargerConfigListElement = {
 
 export type EvChargerConfigListData = EvChargerConfigListElement[];
 
-export type ReturnData<T> = {
+export type ChargeConfigInfo = {
+  batHighCap: number,
+  gridCharge: 0 | 1,
+  timeChaf1: string,
+  timeChaf2: string,
+  timeChaf3: string,
+  timeChaf4: string;
+};
+
+export type DisChargeConfigInfo = {
+  batUseCap: number,
+  ctrDis: 0 | 1,
+  timeDise1: string,
+  timeDise2: string,
+  timeDisf1: string,
+  timeDisf2: string,
+};
+
+export type ReturnData<T = null> = {
   code: number;
   msg: string;
+  expMsg: string;
   data: T;
 };

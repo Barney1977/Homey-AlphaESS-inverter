@@ -1,7 +1,7 @@
 'use strict';
 
 import { Device } from 'homey';
-import Mutex from '../modbus/mutex';
+import Mutex from '../utils/mutex';
 import ModbusEventEmitter from '../modbus/emitter';
 import { ModbusResult } from '../modbus/reader';
 

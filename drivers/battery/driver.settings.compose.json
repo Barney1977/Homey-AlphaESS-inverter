@@ -49,7 +49,7 @@
       "ru": "Интервал",
       "ko": "간격"
     },
-    "value": 30,
+    "value": 10,
     "hint": {
       "en": "the refresh interval in seconds, minimum once every 10 seconds",
       "nl": "het vernieuwingsinterval in seconden, minimaal eenmaal per 10 seconden",

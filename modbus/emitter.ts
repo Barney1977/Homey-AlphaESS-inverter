@@ -21,6 +21,7 @@ export default class ModbusEventEmitter extends EventEmitter {
 
   stop() {
     clearInterval(this.pollingTask);
+    this.pollingTask = undefined;
   }
 
   start(interval = INTERVAL) {
@@ -29,7 +30,7 @@ export default class ModbusEventEmitter extends EventEmitter {
     }
 
     // eslint-disable-next-line homey-app/global-timers, @typescript-eslint/no-misused-promises
-    this.pollingTask = setInterval(() => this.poll(), interval);
+    this.pollingTask = setInterval(this.poll.bind(this), interval);
   }
 
   async poll() {

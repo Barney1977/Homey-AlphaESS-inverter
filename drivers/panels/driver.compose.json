@@ -19,7 +19,8 @@
     "measure_power.ppv1",
     "measure_power.ppv2",
     "measure_power.ppv3",
-    "measure_power.ppv4"
+    "measure_power.ppv4",
+    "meter_power"
   ],
   "capabilitiesOptions": {
     "measure_power.ppv1": {

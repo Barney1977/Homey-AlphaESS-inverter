@@ -22,13 +22,19 @@
     "measure_power.ev3",
     "measure_power.ev4",
     "evcharger_charging",
-    "evcharger_charging_state"
+    "evcharger_charging_state",
+    "measure_current"
   ],
   "energy": {
     "evCharger": true,
     "meterPowerImportedCapability": "meter_power.charged"
   },
   "capabilitiesOptions": {
+    "measure_current": {
+      "decimals": "0",
+      "min": "0",
+      "max": "100"
+    },
     "measure_power.ev1": {
       "title": {
         "en": "Power EV1",

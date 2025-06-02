@@ -1,11 +1,12 @@
 'use strict';
 
 import rateLimit from 'axios-rate-limit';
-import { create } from 'axios';
+import { AxiosResponse, create } from 'axios';
 import {
   requestLogger, responseLogger, errorLogger, setGlobalConfig,
 } from 'axios-logger';
 import signRequest from './signRequest';
+import { ReturnData } from './responseTypes';
 
 setGlobalConfig({
   prefixText: false,
@@ -18,7 +19,7 @@ setGlobalConfig({
   //   logger: someLogger.info.bind(this),
 });
 
-const axiosInstance = rateLimit(create(), { maxRPS: 1 });
+const axiosInstance = rateLimit(create(), { maxRPS: 2 });
 axiosInstance.interceptors.request.use(requestLogger, errorLogger);
 axiosInstance.interceptors.response.use(responseLogger, errorLogger);
 
@@ -27,13 +28,23 @@ const API_URL = 'https://openapi.alphaess.com/api';
 export const Requests = {
   // get
   EssList: 'getEssList',
-  LastPowerData: 'getLastPowerData',
   EvChargerConfigList: 'getEvChargerConfigList',
-  EvChargerStatusBySn: 'getEvChargerStatusBySn',
+
+  LastPowerData: 'getLastPowerData',
   OneDateEnergyBySn: 'getOneDateEnergyBySn',
+
+  EvChargerStatusBySn: 'getEvChargerStatusBySn',
+  EvChargerCurrentsBySn: 'getEvChargerCurrentsBySn',
+
+  ChargeConfig: 'getChargeConfigInfo',
+  DisChargeConfig: 'getDisChargeConfigInfo',
 
   // post
   ControlEvCharger: 'remoteControlEvCharger',
+  ControlEvChargerCurrent: 'setEvChargerCurrentsBySn',
+
+  ControlDisChargeConfig: 'updateDisChargeConfigInfo',
+  ControlChargeConfig: 'updateChargeConfigInfo',
 };
 
 type SettingsFunc = {
@@ -42,7 +53,34 @@ type SettingsFunc = {
   appSecret?: string;
 };
 
-export async function getApi<T>(name: string, settings: SettingsFunc, params?: { [key: string]: string | number }): Promise<T> {
+type UndefinedMap = { [key: string]: string | number };
+const SUCCESS = 200;
+
+function validateResponse(response: AxiosResponse) {
+  // eslint-disable-next-line prefer-destructuring
+  const data: ReturnData = response.data;
+
+  if (response.status !== SUCCESS || data?.code !== SUCCESS) {
+    if (data?.expMsg || data?.msg) {
+      // eslint-disable-next-line prefer-const
+      let { msg, expMsg } = data;
+
+      if (expMsg) {
+        if (!msg) {
+          msg = expMsg;
+        } else {
+          msg += ` (${data.expMsg})`;
+        }
+      }
+
+      throw new Error(`${msg} #${data.code}`);
+    }
+
+    throw new Error(response.statusText);
+  }
+}
+
+export async function getApi<T, T2 = UndefinedMap>(name: string, settings: SettingsFunc, params?: T2): Promise<T> {
   const appId = typeof settings.get === 'function' ? settings.get('appId') : settings.appId;
   const appSecret = typeof settings.get === 'function' ? settings.get('appSecret') : settings.appSecret;
 
@@ -58,10 +96,11 @@ export async function getApi<T>(name: string, settings: SettingsFunc, params?: {
     },
   );
 
+  validateResponse(response);
   return response.data?.data;
 }
 
-export async function postApi<T>(name: string, settings: SettingsFunc, body?: { [key: string]: string | number }): Promise<T> {
+export async function postApi<T2 = UndefinedMap, T = ReturnData<null>>(name: string, settings: SettingsFunc, body?: T2): Promise<T> {
   const appId = typeof settings.get === 'function' ? settings.get('appId') : settings.appId;
   const appSecret = typeof settings.get === 'function' ? settings.get('appSecret') : settings.appSecret;
 
@@ -77,5 +116,6 @@ export async function postApi<T>(name: string, settings: SettingsFunc, body?: { 
     },
   );
 
+  validateResponse(response);
   return response.data;
 }

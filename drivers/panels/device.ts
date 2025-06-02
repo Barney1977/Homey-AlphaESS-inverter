@@ -1,11 +1,25 @@
 'use strict';
 
-import { LastPowerData } from '../../api/responseTypes';
+import { LastPowerData, OneDateEnergyBySnData } from '../../api/responseTypes';
 import BaseDevice from '../baseDevice';
+import config from './driver.compose.json';
 
 class PanelDevice extends BaseDevice {
 
-  async setCapabilities(data: LastPowerData) {
+  async onInit() {
+    await super.onInit();
+    await this.checkCapabilites(config.capabilities);
+  }
+
+  async handleEnergyData(energy: OneDateEnergyBySnData) {
+    await super.handleEnergyData(energy);
+    await Promise.all([
+      this.setCapabilityValue('meter_power', energy.epv),
+    ]);
+  }
+
+  async handlePowerData(data: LastPowerData) {
+    await super.handlePowerData(data);
     await Promise.all([
       this.setCapabilityValue('measure_power', data.ppv),
 

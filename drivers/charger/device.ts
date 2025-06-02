@@ -1,44 +1,47 @@
 'use strict';
 
-import { FlowCardTrigger } from 'homey';
 import BaseDevice from '../baseDevice';
 import {
   Requests, postApi,
 } from '../../api/requests';
 import {
+  EvChargerCurrentsBySn,
   EvChargerStatus, EvChargerStatusBySnData, LastPowerData, OneDateEnergyBySnData, ReturnData,
 } from '../../api/responseTypes';
+import { ControlMode, Current, EVCharger } from '../../api/paramTypes';
+import config from './driver.compose.json';
 
 class ChargerDevice extends BaseDevice {
 
   async onInit() {
     await super.onInit();
+    await super.checkCapabilites(config.capabilities);
 
     await this.registerCapabilityListener('evcharger_charging', (val) => this.controlState(val));
+    this.homey.flow.getActionCard('set-current').registerRunListener(({ current }, _state) => this.controlCurrent(current));
+  }
+
+  async controlCurrent(currentsetting: number) {
+    const sysSn = this.getSetting('sysSn');
+    this.log('Set curren t to', currentsetting);
+
+    await postApi<Current>(Requests.ControlEvChargerCurrent, this.homey.settings, {
+      sysSn,
+      currentsetting,
+    });
   }
 
   async controlState(on: boolean) {
     const sysSn = this.getSetting('sysSn');
     const evchargerSn = this.getSetting('evchargerSn');
 
-    if (!sysSn || !evchargerSn) {
-      this.log('Missing configuration: sysSn, evchargerSn');
-      return;
-    }
+    this.log('Set charge to', on);
 
-    try {
-      this.log('Set charge to', on);
-
-      const response = await postApi<ReturnData<unknown>>(Requests.ControlEvCharger, this.homey.settings, {
-        sysSn,
-        evchargerSn,
-        controlMode: on ? 1 : 0,
-      });
-
-      this.log('Executed', response);
-    } catch (error) {
-      this.error('Failed to control state', error);
-    }
+    await postApi<ControlMode>(Requests.ControlEvCharger, this.homey.settings, {
+      sysSn,
+      evchargerSn,
+      controlMode: on ? 1 : 0,
+    });
   }
 
   convertState(s?: EvChargerStatus): string {
@@ -59,31 +62,37 @@ class ChargerDevice extends BaseDevice {
     }
   }
 
-  async task() {
-    const base = super.task();
+  async runTask() {
+    await super.runTask();
 
     const sysSn = this.getSetting('sysSn');
     const evchargerSn = this.getSetting('evchargerSn');
 
-    if (!sysSn || !evchargerSn) {
-      this.log('Missing configuration: sysSn, evchargerSn');
-      return;
-    }
+    const [evChargerStatus, current] = await Promise.all([
+      this.fetchData<EvChargerStatusBySnData, EVCharger>(Requests.EvChargerStatusBySn, { sysSn, evchargerSn }),
+      this.fetchData<EvChargerCurrentsBySn, EVCharger>(Requests.EvChargerCurrentsBySn, { sysSn, evchargerSn }),
+    ]);
 
-    const evChargerStatus = await this.fetchData<EvChargerStatusBySnData>(Requests.EvChargerStatusBySn, { sysSn, evchargerSn });
     const newChargerState = evChargerStatus ? evChargerStatus.evchargerStatus : undefined;
 
-    await this.setCapabilityValue('evcharger_charging_state', this.convertState(newChargerState));
-    await this.setCapabilityValue('evcharger_charging', newChargerState === EvChargerStatus.Charging);
-
-    const queryDate = new Date().toISOString().substring(0, 10);
-    const energy = await this.fetchData<OneDateEnergyBySnData>(Requests.OneDateEnergyBySn, { sysSn, queryDate });
-    await this.setCapabilityValue('meter_power.charged', energy?.eChargingPile);
-
-    await base;
+    await Promise.all([
+      this.setCapabilityValue('evcharger_charging_state', this.convertState(newChargerState)),
+      this.setCapabilityValue('evcharger_charging', newChargerState === EvChargerStatus.Charging),
+      this.setCapabilityValue('measure_current', current?.currentsetting),
+    ]);
   }
 
-  async setCapabilities(data: LastPowerData) {
+  async handleEnergyData(data: OneDateEnergyBySnData) {
+    await super.handleEnergyData(data);
+
+    await Promise.all([
+      this.setCapabilityValue('meter_power.charged', data.eChargingPile),
+    ]);
+  }
+
+  async handlePowerData(data: LastPowerData) {
+    await super.handlePowerData(data);
+
     await Promise.all([
       this.setCapabilityValue('measure_power', data.pev),
 

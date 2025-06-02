@@ -60,6 +60,825 @@
   },
   "source": "https://github.com/Aboreon/Homey-AlphaESS-inverter",
   "register": "https://github.com/Aboreon/Homey-AlphaESS-inverter",
+  "flow": {
+    "actions": [
+      {
+        "id": "get-discharge-times",
+        "title": {
+          "en": "Get Discharging Information",
+          "nl": "Krijg ontlaadinformatie",
+          "da": "Få afladningsinformation",
+          "de": "Entladeinformationen abrufen",
+          "es": "Obtener información de descarga",
+          "fr": "Obtenir les informations de décharge",
+          "it": "Ottieni informazioni di scarica",
+          "no": "Få utladningsinformasjon",
+          "sv": "Hämta urladdningsinformation",
+          "pl": "Uzyskaj informacje o rozładowaniu",
+          "ru": "Получить информацию о разрядке",
+          "ko": "방전 정보 받기"
+        },
+        "tokens": [
+          {
+            "name": "batUseCap",
+            "type": "number",
+            "label": "%",
+            "title": {
+              "en": "Cutoff SOC",
+              "nl": "Afsluitsuverheid SOC",
+              "da": "Afskærings-SOC",
+              "de": "Abschalt-SOC",
+              "es": "Corte de SOC",
+              "fr": "Coupure SOC",
+              "it": "Interruzione SOC",
+              "no": "Avskjæring SOC",
+              "sv": "Avstängning SOC",
+              "pl": "Próg SOC",
+              "ru": "Отсечка SOC",
+              "ko": "차단 SOC"
+            },
+            "example": {
+              "en": "50",
+              "nl": "50",
+              "da": "50",
+              "de": "50",
+              "es": "50",
+              "fr": "50",
+              "it": "50",
+              "no": "50",
+              "sv": "50",
+              "pl": "50",
+              "ru": "50",
+              "ko": "50"
+            }
+          },
+          {
+            "name": "ctrDis",
+            "type": "boolean",
+            "title": {
+              "en": "Enabled?",
+              "nl": "Ingeschakeld?",
+              "da": "Aktiveret?",
+              "de": "Aktiviert?",
+              "es": "¿Habilitado?",
+              "fr": "Activé?",
+              "it": "Abilitato?",
+              "no": "Aktivert?",
+              "sv": "Aktiverad?",
+              "pl": "Włączone?",
+              "ru": "Включено?",
+              "ko": "사용?"
+            }
+          },
+          {
+            "name": "timeDise1",
+            "type": "string",
+            "title": {
+              "en": "Period 1 End Time",
+              "nl": "Periode 1 eindtijd",
+              "da": "Periode 1 slut tidspunkt",
+              "de": "Periode 1 Endzeit",
+              "es": "Hora de fin del periodo 1",
+              "fr": "Heure de fin de la période 1",
+              "it": "Ora di fine periodo 1",
+              "no": "Periode 1 sluttid",
+              "sv": "Period 1 sluttid",
+              "pl": "Koniec okresu 1",
+              "ru": "Время окончания периода 1",
+              "ko": "기간 1 종료 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeDise2",
+            "type": "string",
+            "title": {
+              "en": "Period 2 End Time",
+              "nl": "Periode 2 eindtijd",
+              "da": "Periode 2 slut tidspunkt",
+              "de": "Periode 2 Endzeit",
+              "es": "Hora de fin del periodo 2",
+              "fr": "Heure de fin de la période 2",
+              "it": "Ora di fine periodo 2",
+              "no": "Periode 2 sluttid",
+              "sv": "Period 2 sluttid",
+              "pl": "Koniec okresu 2",
+              "ru": "Время окончания периода 2",
+              "ko": "기간 2 종료 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeDisf1",
+            "type": "string",
+            "title": {
+              "en": "Period 1 Start Time",
+              "nl": "Periode 1 starttijd",
+              "da": "Periode 1 start tidspunkt",
+              "de": "Periode 1 Startzeit",
+              "es": "Hora de inicio del periodo 1",
+              "fr": "Heure de début de la période 1",
+              "it": "Ora di inizio periodo 1",
+              "no": "Periode 1 starttid",
+              "sv": "Period 1 starttid",
+              "pl": "Początek okresu 1",
+              "ru": "Время начала периода 1",
+              "ko": "기간 1 시작 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeDisf2",
+            "type": "string",
+            "title": {
+              "en": "Period 2 Start Time",
+              "nl": "Periode 2 starttijd",
+              "da": "Periode 2 start tidspunkt",
+              "de": "Periode 2 Startzeit",
+              "es": "Hora de inicio del periodo 2",
+              "fr": "Heure de début de la période 2",
+              "it": "Ora di inizio periodo 2",
+              "no": "Periode 2 starttid",
+              "sv": "Period 2 starttid",
+              "pl": "Początek okresu 2",
+              "ru": "Время начала периода 2",
+              "ko": "기간 2 시작 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=battery"
+          }
+        ]
+      },
+      {
+        "id": "get-charge-times",
+        "title": {
+          "en": "Get Charging Information",
+          "nl": "Krijg laadinformatie",
+          "da": "Få opladningsinformation",
+          "de": "Ladeinformationen abrufen",
+          "es": "Obtener información de carga",
+          "fr": "Obtenir les informations de charge",
+          "it": "Ottieni informazioni di carica",
+          "no": "Få ladningsinformasjon",
+          "sv": "Hämta laddningsinformation",
+          "pl": "Uzyskaj informacje o ładowaniu",
+          "ru": "Получить информацию о заряде",
+          "ko": "충전 정보 받기"
+        },
+        "tokens": [
+          {
+            "name": "batHighCap",
+            "type": "number",
+            "label": "%",
+            "title": {
+              "en": "Stops at SOC",
+              "nl": "Stopt bij SOC",
+              "da": "Stopper ved SOC",
+              "de": "Stoppt bei SOC",
+              "es": "Se detiene en SOC",
+              "fr": "S'arrête à SOC",
+              "it": "Si ferma a SOC",
+              "no": "Stopper ved SOC",
+              "sv": "Stannar vid SOC",
+              "pl": "Zatrzymuje się przy SOC",
+              "ru": "Останавливается на SOC",
+              "ko": "SOC에서 멈춤"
+            },
+            "example": {
+              "en": "50",
+              "nl": "50",
+              "da": "50",
+              "de": "50",
+              "es": "50",
+              "fr": "50",
+              "it": "50",
+              "no": "50",
+              "sv": "50",
+              "pl": "50",
+              "ru": "50",
+              "ko": "50"
+            }
+          },
+          {
+            "name": "gridCharge",
+            "type": "boolean",
+            "title": {
+              "en": "Charge from Grid?",
+              "nl": "Laden vanaf net?",
+              "da": "Oplad fra net?",
+              "de": "Vom Stromnetz laden?",
+              "es": "¿Cargar desde la red?",
+              "fr": "Charger depuis le réseau?",
+              "it": "Carica dalla rete?",
+              "no": "Lad fra nettet?",
+              "sv": "Ladda från nätet?",
+              "pl": "Ładować z sieci?",
+              "ru": "Заряжать от сети?",
+              "ko": "그리드에서 충전?"
+            }
+          },
+          {
+            "name": "timeChaf1",
+            "type": "string",
+            "title": {
+              "en": "Period 1 Start Time",
+              "nl": "Periode 1 starttijd",
+              "da": "Periode 1 start tidspunkt",
+              "de": "Periode 1 Startzeit",
+              "es": "Hora de inicio del periodo 1",
+              "fr": "Heure de début de la période 1",
+              "it": "Ora di inizio periodo 1",
+              "no": "Periode 1 starttid",
+              "sv": "Period 1 starttid",
+              "pl": "Początek okresu 1",
+              "ru": "Время начала периода 1",
+              "ko": "기간 1 시작 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeChae1",
+            "type": "string",
+            "title": {
+              "en": "Period 1 End Time",
+              "nl": "Periode 1 eindtijd",
+              "da": "Periode 1 slut tidspunkt",
+              "de": "Periode 1 Endzeit",
+              "es": "Hora de fin del periodo 1",
+              "fr": "Heure de fin de la période 1",
+              "it": "Ora di fine periodo 1",
+              "no": "Periode 1 sluttid",
+              "sv": "Period 1 sluttid",
+              "pl": "Koniec okresu 1",
+              "ru": "Время окончания периода 1",
+              "ko": "기간 1 종료 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeChaf2",
+            "type": "string",
+            "title": {
+              "en": "Period 2 Start Time",
+              "nl": "Periode 2 starttijd",
+              "da": "Periode 2 start tidspunkt",
+              "de": "Periode 2 Startzeit",
+              "es": "Hora de inicio del periodo 2",
+              "fr": "Heure de début de la période 2",
+              "it": "Ora di inizio periodo 2",
+              "no": "Periode 2 starttid",
+              "sv": "Period 2 starttid",
+              "pl": "Początek okresu 2",
+              "ru": "Время начала периода 2",
+              "ko": "기간 2 시작 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          },
+          {
+            "name": "timeChae2",
+            "type": "string",
+            "title": {
+              "en": "Period 2 End Time",
+              "nl": "Periode 2 eindtijd",
+              "da": "Periode 2 slut tidspunkt",
+              "de": "Periode 2 Endzeit",
+              "es": "Hora de fin del periodo 2",
+              "fr": "Heure de fin de la période 2",
+              "it": "Ora di fine periodo 2",
+              "no": "Periode 2 sluttid",
+              "sv": "Period 2 sluttid",
+              "pl": "Koniec okresu 2",
+              "ru": "Время окончания периода 2",
+              "ko": "기간 2 종료 시간"
+            },
+            "example": {
+              "en": "HH:mm",
+              "nl": "HH:mm",
+              "da": "TT:mm",
+              "de": "HH:mm",
+              "es": "HH:mm",
+              "fr": "HH:mm",
+              "it": "HH:mm",
+              "no": "HH:mm",
+              "sv": "HH:mm",
+              "pl": "HH:mm",
+              "ru": "ЧЧ:мм",
+              "ko": "시:분"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=battery"
+          }
+        ]
+      },
+      {
+        "id": "set-charge-times",
+        "title": {
+          "en": "Set Charging Times",
+          "nl": "Instellen van laadtijden",
+          "da": "Indstil opladningstider",
+          "de": "Ladezeiten einstellen",
+          "es": "Establecer tiempos de carga",
+          "fr": "Définir les temps de charge",
+          "it": "Imposta tempi di carica",
+          "no": "Sett ladetider",
+          "sv": "Ställ in laddningstider",
+          "pl": "Ustaw czasy ładowania",
+          "ru": "Установить времена зарядки",
+          "ko": "충전 시간 설정"
+        },
+        "hint": {
+          "en": "The time format is HH:mm, such as: 00:00, the maximum is 23:45, the minimum is 00:00, and the interval is 15 minutes, otherwise no effect.",
+          "nl": "Het tijdformaat is HH:mm, zoals: 00:00, het maximum is 23:45, het minimum is 00:00, en het interval is 15 minuten, anders geen effect.",
+          "da": "Tidsformatet er TT:mm, som i: 00:00, det maksimale er 23:45, det minimale er 00:00, og intervallet er 15 minutter, ellers ingen effekt.",
+          "de": "Das Zeitformat ist HH:mm, zum Beispiel: 00:00, das Maximum ist 23:45, das Minimum ist 00:00, und das Intervall ist 15 Minuten, ansonsten keine Wirkung.",
+          "es": "El formato de hora es HH:mm, como: 00:00, el máximo es 23:45, el mínimo es 00:00, y el intervalo es de 15 minutos, de lo contrario no tiene efecto.",
+          "fr": "Le format de l'heure est HH:mm, tel que : 00:00, le maximum est 23:45, le minimum est 00:00, et l'intervalle est de 15 minutes, sinon pas d'effet.",
+          "it": "Il formato dell'ora è HH:mm, ad esempio: 00:00, il massimo è 23:45, il minimo è 00:00, e l'intervallo è di 15 minuti, altrimenti non ha effetto.",
+          "no": "Tidsformatet er HH:mm, for eksempel: 00:00, maksimum er 23:45, minimum er 00:00, og intervallet er 15 minutter, hvis ikke null effekt.",
+          "sv": "Tidformatet är HH:mm, till exempel: 00:00, max är 23:45, min är 00:00 och intervallet är 15 minuter, annars ingen effekt.",
+          "pl": "Format czasu to HH:mm, na przykład: 00:00, maksymalny czas to 23:45, minimalny czas to 00:00, a odstęp to 15 minut, w przeciwnym razie brak efektu.",
+          "ru": "Формат времени - ЧЧ:мм, например: 00:00, максимум - 23:45, минимум - 00:00, интервал - 15 минут, иначе эффекта нет.",
+          "ko": "시간 형식은 HH:mm입니다. 예: 00:00, 최대값은 23:45, 최소값은 00:00, 간격은 15분입니다. 그렇지 않으면 효과가 없습니다."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=battery"
+          },
+          {
+            "type": "range",
+            "name": "batHighCap",
+            "placeholder": {
+              "en": "Stop at SOC",
+              "nl": "Stoppen bij SOC",
+              "da": "Stop ved SOC",
+              "de": "Bei SOC stoppen",
+              "es": "Detener en SOC",
+              "fr": "Arrêter à SOC",
+              "it": "Fermarsi a SOC",
+              "no": "Stopp ved SOC",
+              "sv": "Stoppa vid SOC",
+              "pl": "Zatrzymać się przy SOC",
+              "ru": "Остановиться на SOC",
+              "ko": "SOC에서 멈춤"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "%"
+          },
+          {
+            "type": "checkbox",
+            "name": "gridCharge",
+            "placeholder": {
+              "en": "Charge from Grid?",
+              "nl": "Laden vanaf net?",
+              "da": "Oplad fra net?",
+              "de": "Vom Stromnetz laden?",
+              "es": "¿Cargar desde la red?",
+              "fr": "Charger depuis le réseau?",
+              "it": "Carica dalla rete?",
+              "no": "Lad fra nettet?",
+              "sv": "Ladda från nätet?",
+              "pl": "Ładować z sieci?",
+              "ru": "Заряжать от сети?",
+              "ko": "그리드에서 충전?"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeChaf1",
+            "placeholder": {
+              "en": "Period 1 Start Time",
+              "nl": "Periode 1 starttijd",
+              "da": "Periode 1 start tidspunkt",
+              "de": "Periode 1 Startzeit",
+              "es": "Hora de inicio del periodo 1",
+              "fr": "Heure de début de la période 1",
+              "it": "Ora di inizio periodo 1",
+              "no": "Periode 1 starttid",
+              "sv": "Period 1 starttid",
+              "pl": "Początek okresu 1",
+              "ru": "Время начала периода 1",
+              "ko": "기간 1 시작 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeChae1",
+            "placeholder": {
+              "en": "Period 1 End Time",
+              "nl": "Periode 1 eindtijd",
+              "da": "Periode 1 slut tidspunkt",
+              "de": "Periode 1 Endzeit",
+              "es": "Hora de fin del periodo 1",
+              "fr": "Heure de fin de la période 1",
+              "it": "Ora di fine periodo 1",
+              "no": "Periode 1 sluttid",
+              "sv": "Period 1 sluttid",
+              "pl": "Koniec okresu 1",
+              "ru": "Время окончания периода 1",
+              "ko": "기간 1 종료 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeChaf2",
+            "placeholder": {
+              "en": "Period 2 Start Time",
+              "nl": "Periode 2 starttijd",
+              "da": "Periode 2 start tidspunkt",
+              "de": "Periode 2 Startzeit",
+              "es": "Hora de inicio del periodo 2",
+              "fr": "Heure de début de la période 2",
+              "it": "Ora di inizio periodo 2",
+              "no": "Periode 2 starttid",
+              "sv": "Period 2 starttid",
+              "pl": "Początek okresu 2",
+              "ru": "Время начала периода 2",
+              "ko": "기간 2 시작 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeChae2",
+            "placeholder": {
+              "en": "Period 2 End Time",
+              "nl": "Periode 2 eindtijd",
+              "da": "Periode 2 slut tidspunkt",
+              "de": "Periode 2 Endzeit",
+              "es": "Hora de fin del periodo 2",
+              "fr": "Heure de fin de la période 2",
+              "it": "Ora di fine periodo 2",
+              "no": "Periode 2 sluttid",
+              "sv": "Period 2 sluttid",
+              "pl": "Koniec okresu 2",
+              "ru": "Время окончания периода 2",
+              "ko": "기간 2 종료 시간"
+            }
+          }
+        ]
+      },
+      {
+        "id": "set-discharge-times",
+        "title": {
+          "en": "Set Discharge Times",
+          "nl": "Instellen van ontlaadtijden",
+          "da": "Indstil afladningstider",
+          "de": "Entladezeiten einstellen",
+          "es": "Establecer tiempos de descarga",
+          "fr": "Définir les temps de décharge",
+          "it": "Imposta tempi di scarica",
+          "no": "Sett utladningstider",
+          "sv": "Ställ in urladdningstider",
+          "pl": "Ustaw czasy rozładowania",
+          "ru": "Установить времена разрядки",
+          "ko": "방전 시간 설정"
+        },
+        "hint": {
+          "en": "The time format is HH:mm, such as: 00:00, the maximum is 23:45, the minimum is 00:00, and the interval is 15 minutes, otherwise no effect.",
+          "nl": "Het tijdformaat is HH:mm, zoals: 00:00, het maximum is 23:45, het minimum is 00:00, en het interval is 15 minuten, anders geen effect.",
+          "da": "Tidsformatet er TT:mm, som i: 00:00, det maksimale er 23:45, det minimale er 00:00, og intervallet er 15 minutter, ellers ingen effekt.",
+          "de": "Das Zeitformat ist HH:mm, zum Beispiel: 00:00, das Maximum ist 23:45, das Minimum ist 00:00, und das Intervall ist 15 Minuten, ansonsten keine Wirkung.",
+          "es": "El formato de hora es HH:mm, como: 00:00, el máximo es 23:45, el mínimo es 00:00, y el intervalo es de 15 minutos, de lo contrario no tiene efecto.",
+          "fr": "Le format de l'heure est HH:mm, tel que : 00:00, le maximum est 23:45, le minimum est 00:00, et l'intervalle est de 15 minutes, sinon pas d'effet.",
+          "it": "Il formato dell'ora è HH:mm, ad esempio: 00:00, il massimo è 23:45, il minimo è 00:00, e l'intervallo è di 15 minuti, altrimenti non ha effetto.",
+          "no": "Tidsformatet er HH:mm, for eksempel: 00:00, maksimum er 23:45, minimum er 00:00, og intervallet er 15 minutter, hvis ikke null effekt.",
+          "sv": "Tidformatet är HH:mm, till exempel: 00:00, max är 23:45, min är 00:00 och intervallet är 15 minuter, annars ingen effekt.",
+          "pl": "Format czasu to HH:mm, na przykład: 00:00, maksymalny czas to 23:45, minimalny czas to 00:00, a odstęp to 15 minut, w przeciwnym razie brak efektu.",
+          "ru": "Формат времени - ЧЧ:мм, например: 00:00, максимум - 23:45, минимум - 00:00, интервал - 15 минут, иначе эффекта нет.",
+          "ko": "시간 형식은 HH:mm입니다. 예: 00:00, 최대값은 23:45, 최소값은 00:00, 간격은 15분입니다. 그렇지 않으면 효과가 없습니다."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=battery"
+          },
+          {
+            "type": "range",
+            "name": "batUseCap",
+            "placeholder": {
+              "en": "Cutoff SOC",
+              "nl": "Afsluitsuverheid SOC",
+              "da": "Afskærings-SOC",
+              "de": "Abschalt-SOC",
+              "es": "Corte de SOC",
+              "fr": "Coupure SOC",
+              "it": "Interruzione SOC",
+              "no": "Avskjæring SOC",
+              "sv": "Avstängning SOC",
+              "pl": "Próg SOC",
+              "ru": "Отсечка SOC",
+              "ko": "차단 SOC"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "%"
+          },
+          {
+            "type": "checkbox",
+            "name": "ctrDis",
+            "placeholder": {
+              "en": "Enable?",
+              "nl": "Inschakelen?",
+              "da": "Aktiver?",
+              "de": "Aktivieren?",
+              "es": "¿Habilitar?",
+              "fr": "Activer?",
+              "it": "Abilitare?",
+              "no": "Aktiver?",
+              "sv": "Aktivera?",
+              "pl": "Włączyć?",
+              "ru": "Включить?",
+              "ko": "사용?"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeDisf1",
+            "placeholder": {
+              "en": "Period 1 Start Time",
+              "nl": "Periode 1 starttijd",
+              "da": "Periode 1 start tidspunkt",
+              "de": "Periode 1 Startzeit",
+              "es": "Hora de inicio del periodo 1",
+              "fr": "Heure de début de la période 1",
+              "it": "Ora di inizio periodo 1",
+              "no": "Periode 1 starttid",
+              "sv": "Period 1 starttid",
+              "pl": "Początek okresu 1",
+              "ru": "Время начала периода 1",
+              "ko": "기간 1 시작 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeDise1",
+            "placeholder": {
+              "en": "Period 1 End Time",
+              "nl": "Periode 1 eindtijd",
+              "da": "Periode 1 slut tidspunkt",
+              "de": "Periode 1 Endzeit",
+              "es": "Hora de fin del periodo 1",
+              "fr": "Heure de fin de la période 1",
+              "it": "Ora di fine periodo 1",
+              "no": "Periode 1 sluttid",
+              "sv": "Period 1 sluttid",
+              "pl": "Koniec okresu 1",
+              "ru": "Время окончания периода 1",
+              "ko": "기간 1 종료 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeDisf2",
+            "placeholder": {
+              "en": "Period 2 Start Time",
+              "nl": "Periode 2 starttijd",
+              "da": "Periode 2 start tidspunkt",
+              "de": "Periode 2 Startzeit",
+              "es": "Hora de inicio del periodo 2",
+              "fr": "Heure de début de la période 2",
+              "it": "Ora di inizio periodo 2",
+              "no": "Periode 2 starttid",
+              "sv": "Period 2 starttid",
+              "pl": "Początek okresu 2",
+              "ru": "Время начала периода 2",
+              "ko": "기간 2 시작 시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "timeDise2",
+            "placeholder": {
+              "en": "Period 2 End Time",
+              "nl": "Periode 2 eindtijd",
+              "da": "Periode 2 slut tidspunkt",
+              "de": "Periode 2 Endzeit",
+              "es": "Hora de fin del periodo 2",
+              "fr": "Heure de fin de la période 2",
+              "it": "Ora di fine periodo 2",
+              "no": "Periode 2 sluttid",
+              "sv": "Period 2 sluttid",
+              "pl": "Koniec okresu 2",
+              "ru": "Время окончания периода 2",
+              "ko": "기간 2 종료 시간"
+            }
+          }
+        ]
+      },
+      {
+        "id": "set-current",
+        "title": {
+          "en": "Set Household Current",
+          "nl": "Huishoudelijk Stroom Instellen",
+          "da": "Indstil Husstandsstrøm",
+          "de": "Haushaltsstrom Einstellen",
+          "es": "Configurar Corriente Doméstica",
+          "fr": "Régler le Courant Ménager",
+          "it": "Imposta Corrente Domestica",
+          "no": "Sett Husholdningsstrøm",
+          "sv": "Ställ in Hushållsström",
+          "pl": "Ustaw Prąd Domowy",
+          "ru": "Установить Домашний Ток",
+          "ko": "가정 전류 설정"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=charger"
+          },
+          {
+            "type": "number",
+            "name": "current",
+            "placeholder": {
+              "en": "Current",
+              "nl": "Stroom",
+              "da": "Strøm",
+              "de": "Strom",
+              "es": "Corriente",
+              "fr": "Courant",
+              "it": "Corrente",
+              "no": "Strøm",
+              "sv": "Ström",
+              "pl": "Prąd",
+              "ru": "Ток",
+              "ko": "전류"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "id": "alpha_state_changed",
+        "title": {
+          "en": "The work mode changed",
+          "nl": "De werkmodus is gewijzigd",
+          "da": "Arbejdstilstanden ændrede sig",
+          "de": "Der Arbeitsmodus hat sich geändert",
+          "es": "El modo de trabajo cambió",
+          "fr": "Le mode de travail a changé",
+          "it": "La modalità di lavoro è cambiata",
+          "no": "Arbeidsmodus endret",
+          "sv": "Arbetsläget har ändrats",
+          "pl": "Tryb pracy zmienił się",
+          "ru": "Режим работы изменился",
+          "ko": "작업 모드가 변경되었습니다"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "alpha_state",
+            "title": {
+              "en": "Inverter work mode",
+              "nl": "Omvormer werkmodus",
+              "da": "Inverter arbejdstilstand",
+              "de": "Wechselrichter-Betriebsmodus",
+              "es": "Modo de trabajo del inversor",
+              "fr": "Mode de fonctionnement de l'onduleur",
+              "it": "Modalità di lavoro dell'inverter",
+              "no": "Inverter arbeidsmodus",
+              "sv": "Inverter arbetssätt",
+              "pl": "Tryb pracy inwertera",
+              "ru": "Режим работы инвертора",
+              "ko": "인버터 작업 모드"
+            },
+            "example": {
+              "en": "Wait Mode, UPS Mode, ...",
+              "nl": "Wachtmodus, UPS-modus, ...",
+              "da": "Ventetilstand, UPS-tilstand, ...",
+              "de": "Wartemodus, UPS-Modus, ...",
+              "es": "Modo de espera, modo UPS, ...",
+              "fr": "Mode attente, Mode UPS, ...",
+              "it": "Modalità attesa, Modalità UPS, ...",
+              "no": "Ventemodus, UPS-modus, ...",
+              "sv": "Vänteläge, UPS-läge, ...",
+              "pl": "Tryb oczekiwania, tryb UPS, ...",
+              "ru": "Режим ожидания, режим ИБП, ...",
+              "ko": "대기 모드, UPS 모드, ..."
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=grid_modbus"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {
@@ -162,7 +981,7 @@
             "ru": "Интервал",
             "ko": "간격"
           },
-          "value": 30,
+          "value": 10,
           "hint": {
             "en": "the refresh interval in seconds, minimum once every 10 seconds",
             "nl": "het vernieuwingsinterval in seconden, minimaal eenmaal per 10 seconden",
@@ -421,13 +1240,19 @@
         "measure_power.ev3",
         "measure_power.ev4",
         "evcharger_charging",
-        "evcharger_charging_state"
+        "evcharger_charging_state",
+        "measure_current"
       ],
       "energy": {
         "evCharger": true,
         "meterPowerImportedCapability": "meter_power.charged"
       },
       "capabilitiesOptions": {
+        "measure_current": {
+          "decimals": "0",
+          "min": "0",
+          "max": "100"
+        },
         "measure_power.ev1": {
           "title": {
             "en": "Power EV1",
@@ -598,7 +1423,7 @@
             "ru": "Интервал",
             "ko": "간격"
           },
-          "value": 30,
+          "value": 10,
           "hint": {
             "en": "the refresh interval in seconds, minimum once every 10 seconds",
             "nl": "het vernieuwingsinterval in seconden, minimaal eenmaal per 10 seconden",
@@ -639,9 +1464,43 @@
         "measure_power.L3",
         "measure_power.imported",
         "measure_power.exported",
-        "measure_power.load"
+        "measure_power.load",
+        "meter_power.imported",
+        "meter_power.exported"
       ],
       "capabilitiesOptions": {
+        "meter_power.imported": {
+          "title": {
+            "en": "Imported energy",
+            "nl": "Geïmporteerde energie",
+            "da": "Importeret energi",
+            "de": "Importierte Energie",
+            "es": "Energía importada",
+            "fr": "Énergie importée",
+            "it": "Energia importata",
+            "no": "Importert energi",
+            "sv": "Importerad energi",
+            "pl": "Importowana energia",
+            "ru": "Импортированная энергия",
+            "ko": "수입 에너지"
+          }
+        },
+        "meter_power.exported": {
+          "title": {
+            "en": "Exported energy",
+            "nl": "Geëxporteerde energie",
+            "da": "Eksporteret energi",
+            "de": "Exportierte Energie",
+            "es": "Energía exportada",
+            "fr": "Énergie exportée",
+            "it": "Energia esportata",
+            "no": "Eksportert energi",
+            "sv": "Exporterad energi",
+            "pl": "Eksportowana energia",
+            "ru": "Экспортированная энергия",
+            "ko": "수출 에너지"
+          }
+        },
         "measure_power.load": {
           "title": {
             "en": "Total used power",
@@ -740,7 +1599,9 @@
         }
       },
       "energy": {
-        "cumulative": true
+        "cumulative": true,
+        "cumulativeImportedCapability": "meter_power.imported",
+        "cumulativeExportedCapability": "meter_power.exported"
       },
       "platforms": [
         "local"
@@ -804,7 +1665,7 @@
             "ru": "Интервал",
             "ko": "간격"
           },
-          "value": 30,
+          "value": 10,
           "hint": {
             "en": "the refresh interval in seconds, minimum once every 10 seconds",
             "nl": "het vernieuwingsinterval in seconden, minimaal eens per 10 seconden",
@@ -1171,7 +2032,8 @@
         "measure_power.ppv1",
         "measure_power.ppv2",
         "measure_power.ppv3",
-        "measure_power.ppv4"
+        "measure_power.ppv4",
+        "meter_power"
       ],
       "capabilitiesOptions": {
         "measure_power.ppv1": {
@@ -1301,7 +2163,7 @@
             "ru": "Интервал",
             "ko": "간격"
           },
-          "value": 30,
+          "value": 10,
           "hint": {
             "en": "the refresh interval in seconds, minimum once every 10 seconds",
             "nl": "het vernieuwingsinterval in seconden, minimaal eens in de 10 seconden",
@@ -1506,68 +2368,6 @@
       ]
     }
   ],
-  "flow": {
-    "triggers": [
-      {
-        "id": "alpha_state_changed",
-        "title": {
-          "en": "The work mode changed",
-          "nl": "De werkmodus is gewijzigd",
-          "da": "Arbejdstilstanden ændrede sig",
-          "de": "Der Arbeitsmodus hat sich geändert",
-          "es": "El modo de trabajo cambió",
-          "fr": "Le mode de travail a changé",
-          "it": "La modalità di lavoro è cambiata",
-          "no": "Arbeidsmodus endret",
-          "sv": "Arbetsläget har ändrats",
-          "pl": "Tryb pracy zmienił się",
-          "ru": "Режим работы изменился",
-          "ko": "작업 모드가 변경되었습니다"
-        },
-        "tokens": [
-          {
-            "type": "string",
-            "name": "alpha_state",
-            "title": {
-              "en": "Inverter work mode",
-              "nl": "Omvormer werkmodus",
-              "da": "Inverter arbejdstilstand",
-              "de": "Wechselrichter-Betriebsmodus",
-              "es": "Modo de trabajo del inversor",
-              "fr": "Mode de fonctionnement de l'onduleur",
-              "it": "Modalità di lavoro dell'inverter",
-              "no": "Inverter arbeidsmodus",
-              "sv": "Inverter arbetssätt",
-              "pl": "Tryb pracy inwertera",
-              "ru": "Режим работы инвертора",
-              "ko": "인버터 작업 모드"
-            },
-            "example": {
-              "en": "Wait Mode, UPS Mode, ...",
-              "nl": "Wachtmodus, UPS-modus, ...",
-              "da": "Ventetilstand, UPS-tilstand, ...",
-              "de": "Wartemodus, UPS-Modus, ...",
-              "es": "Modo de espera, modo UPS, ...",
-              "fr": "Mode attente, Mode UPS, ...",
-              "it": "Modalità attesa, Modalità UPS, ...",
-              "no": "Ventemodus, UPS-modus, ...",
-              "sv": "Vänteläge, UPS-läge, ...",
-              "pl": "Tryb oczekiwania, tryb UPS, ...",
-              "ru": "Режим ожидания, режим ИБП, ...",
-              "ko": "대기 모드, UPS 모드, ..."
-            }
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=grid_modbus"
-          }
-        ]
-      }
-    ]
-  },
   "capabilities": {
     "alpha_fault_text": {
       "type": "string",

@@ -1,55 +1,153 @@
 'use strict';
 
 import { Device } from 'homey';
-import { Requests, getApi } from '../api/requests';
-import { LastPowerData } from '../api/responseTypes';
+import { LastPowerData, OneDateEnergyBySnData } from '../api/responseTypes';
+import StatisticsEventEmitter from '../api/statistics';
+import Mutex from '../utils/mutex';
+import { getApi } from '../api/requests';
+import { SysSsn } from '../api/paramTypes';
+
+const EMITTERS: { [key: string]: { count: number, instance: StatisticsEventEmitter } } = {};
+const mutex = new Mutex();
+
+async function getInstance(name: string, construct: () => StatisticsEventEmitter) {
+  const unlock = await mutex.lock();
+  try {
+    const inst = EMITTERS[name];
+    if (inst) {
+      inst.count += 1;
+      return inst.instance;
+    }
+
+    const newInst = construct();
+
+    EMITTERS[name] = {
+      count: 1,
+      instance: newInst,
+    };
+
+    return newInst;
+  } finally {
+    unlock();
+  }
+}
+
+async function destroyInstance(name: string) {
+  const unlock = await mutex.lock();
+  try {
+    const inst = EMITTERS[name];
+    inst.count -= 1;
+
+    if (inst.count === 0) {
+      inst.instance.stop();
+      delete EMITTERS[name];
+    }
+  } finally {
+    unlock();
+  }
+}
 
 export default class BaseDevice extends Device {
 
-  pollingTask?: NodeJS.Timeout;
+  taskInstance: string | number | NodeJS.Timeout | undefined;
+
+  emitter?: StatisticsEventEmitter;
+
+  errorEmitter?: (e: unknown) => void;
+  powerEmitter?: (data: LastPowerData) => unknown;
+  energyEmitter?: (data: OneDateEnergyBySnData) => unknown;
+
+  async checkCapabilites(list: string[]) {
+    await Promise.all(list.map((e) => {
+      if (!this.hasCapability(e)) {
+        return this.addCapability(e);
+      }
+
+      return null;
+    }));
+  }
 
   async onInit() {
     this.log('Device has been initialized');
-    this.startPolling();
+    await this.startPolling();
   }
 
   async onSettings(/* { oldSettings, newSettings, changedKeys } */) {
-    this.startPolling();
+    this.log('Settings changed');
+    await this.startPolling();
   }
 
-  startPolling() {
-    // Clear any existing intervals
-    if (this.pollingTask) this.homey.clearInterval(this.pollingTask);
+  async cleanup() {
+    // Clear any existing emitter instances
+    if (this.emitter) {
+      this.log('Cleanup emitters');
 
-    const refreshInterval = this.getSetting('interval') < 10
-      ? 10 // refresh interval in seconds minimum 10
-      : this.getSetting('interval');
+      this.emitter.off('error', this.errorEmitter!);
+      this.emitter.off('power', this.powerEmitter!);
+      this.emitter.off('energy', this.energyEmitter!);
 
-    // Set up a new interval
-    this.pollingTask = this.homey.setInterval(this.task.bind(this), refreshInterval * 1000);
+      await destroyInstance(this.emitter.id());
+      this.emitter = undefined;
+    }
+
+    // Clear any existing task instance
+    if (this.taskInstance) {
+      this.log('Cleanup task');
+
+      this.homey.clearInterval(this.taskInstance);
+      this.taskInstance = undefined;
+    }
   }
 
-  // eslint-disable-next-line no-empty-function
-  async setCapabilities(data: LastPowerData) { }
+  async startPolling() {
+    await this.cleanup();
 
-  async task() {
+    let interval = parseInt(this.getSetting('interval'), 10) || 10;
+    if (Number.isNaN(interval) || interval <= 10) {
+      interval = 10;
+    }
+
     const sysSn = this.getSetting('sysSn');
-    if (!sysSn) {
-      this.log('Missing configuration: sysSn');
-      return;
-    }
+    this.log('Starting polling', interval, 'ms', 'sysSn', sysSn);
 
-    const data = await this.fetchData<LastPowerData>(Requests.LastPowerData, { sysSn });
-    if (data != null) {
-      await this.setCapabilities(data);
-    }
+    this.emitter = await getInstance(sysSn, () => new StatisticsEventEmitter(this.homey.settings, sysSn));
+
+    this.errorEmitter = this.handleError.bind(this);
+    this.emitter.on('error', this.errorEmitter);
+
+    this.energyEmitter = this.handleEnergyData.bind(this);
+    this.emitter.on('energy', this.energyEmitter);
+
+    this.powerEmitter = this.handlePowerData.bind(this);
+    this.emitter.on('power', this.powerEmitter);
+
+    // this is done multiple times
+    this.emitter.start(interval * 1000);
+
+    this.taskInstance = this.homey.setInterval(this.runTask.bind(this), interval * 1000);
   }
 
-  async fetchData<T>(api: string, params: { [key: string]: string | number }): Promise<T | null> {
+  handleError(error: unknown) {
+    this.error('Something went wrong', error);
+  }
+
+  async handlePowerData(_data: LastPowerData) {
+    this.log('Power data received');
+  }
+
+  async handleEnergyData(_data: OneDateEnergyBySnData) {
+    this.log('Energy data received');
+  }
+
+  async runTask() {
+    this.log('Task running');
+  }
+
+  async fetchData<T, T2 = SysSsn>(api: string, params: T2): Promise<T | null> {
     try {
       return getApi(api, this.homey.settings, params);
     } catch (error) {
-      // globally logged, we handle no data
+      this.error(error);
       return null;
     }
   }
@@ -57,8 +155,8 @@ export default class BaseDevice extends Device {
   onDeleted() {
     this.log('Device has been deleted');
 
-    // Clear the interval when the device is deleted
-    this.homey.clearInterval(this.pollingTask);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.cleanup();
   }
 
 }

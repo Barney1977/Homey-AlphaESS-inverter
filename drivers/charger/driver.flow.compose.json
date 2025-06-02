@@ -1,0 +1,44 @@
+{
+  "actions": [
+    {
+      "id": "set-current",
+      "title": {
+        "en": "Set Household Current",
+        "nl": "Huishoudelijk Stroom Instellen",
+        "da": "Indstil Husstandsstrøm",
+        "de": "Haushaltsstrom Einstellen",
+        "es": "Configurar Corriente Doméstica",
+        "fr": "Régler le Courant Ménager",
+        "it": "Imposta Corrente Domestica",
+        "no": "Sett Husholdningsstrøm",
+        "sv": "Ställ in Hushållsström",
+        "pl": "Ustaw Prąd Domowy",
+        "ru": "Установить Домашний Ток",
+        "ko": "가정 전류 설정"
+      },
+      "args": [
+        {
+          "type": "number",
+          "name": "current",
+          "placeholder": {
+            "en": "Current",
+            "nl": "Stroom",
+            "da": "Strøm",
+            "de": "Strom",
+            "es": "Corriente",
+            "fr": "Courant",
+            "it": "Corrente",
+            "no": "Strøm",
+            "sv": "Ström",
+            "pl": "Prąd",
+            "ru": "Ток",
+            "ko": "전류"
+          },
+          "min": 0,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    }
+  ]
+}
