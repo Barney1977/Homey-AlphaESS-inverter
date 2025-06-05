@@ -7,8 +7,8 @@ import config from './driver.compose.json';
 class GridDevice extends BaseDevice {
 
   async onInit() {
-    await super.onInit();
     await this.checkCapabilites(config.capabilities);
+    await super.onInit();
   }
 
   async handleEnergyData(energy: OneDateEnergyBySnData) {

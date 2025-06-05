@@ -14,8 +14,8 @@ import config from './driver.compose.json';
 class ChargerDevice extends BaseDevice {
 
   async onInit() {
-    await super.onInit();
     await super.checkCapabilites(config.capabilities);
+    await super.onInit();
 
     await this.registerCapabilityListener('evcharger_charging', (val) => this.controlState(val));
     this.homey.flow.getActionCard('set-current').registerRunListener(({ current }, _state) => this.controlCurrent(current));

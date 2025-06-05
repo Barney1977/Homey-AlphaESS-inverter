@@ -58,8 +58,11 @@ export default class BaseDevice extends Device {
   energyEmitter?: (data: OneDateEnergyBySnData) => unknown;
 
   async checkCapabilites(list: string[]) {
+    this.log('Checking capabilities', list);
+
     await Promise.all(list.map((e) => {
       if (!this.hasCapability(e)) {
+        this.log('Adding capability', e);
         return this.addCapability(e);
       }
 

@@ -10,8 +10,8 @@ import config from './driver.compose.json';
 class BatteryDevice extends BaseDevice {
 
   async onInit() {
-    await super.onInit();
     await this.checkCapabilites(config.capabilities);
+    await super.onInit();
 
     this.homey.flow.getActionCard('get-charge-times').registerRunListener(async (_args, _state) => {
       const sysSn = this.getSetting('sysSn');
