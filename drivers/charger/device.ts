@@ -44,6 +44,12 @@ class ChargerDevice extends BaseDevice {
     });
   }
 
+  isCharging(s?: EvChargerStatus): boolean {
+    return s === EvChargerStatus.Charging
+      || s === EvChargerStatus.SuspendedEV
+      || s === EvChargerStatus.SuspendedEVSE;
+  }
+
   convertState(s?: EvChargerStatus): string {
     switch (s) {
       case EvChargerStatus.Charging:
@@ -51,9 +57,10 @@ class ChargerDevice extends BaseDevice {
 
       case EvChargerStatus.SuspendedEV:
       case EvChargerStatus.SuspendedEVSE:
+      case EvChargerStatus.Finishing: // ended, but plugged and can be restarted
         return 'plugged_in_paused';
 
-      case EvChargerStatus.Preparing:
+      case EvChargerStatus.Preparing: // not activated
         return 'plugged_in';
 
       // case EvChargerStatus.Available:
@@ -77,7 +84,7 @@ class ChargerDevice extends BaseDevice {
 
     await Promise.all([
       this.setCapabilityValue('evcharger_charging_state', this.convertState(newChargerState)),
-      this.setCapabilityValue('evcharger_charging', newChargerState === EvChargerStatus.Charging),
+      this.setCapabilityValue('evcharger_charging', this.isCharging(newChargerState)),
       this.setCapabilityValue('measure_current', current?.currentsetting),
     ]);
   }
