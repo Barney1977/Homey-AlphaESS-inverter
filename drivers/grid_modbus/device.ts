@@ -4,13 +4,16 @@ import BaseDevice from '../baseModbusDevice';
 import { formatBit } from '../../utils/formatBit';
 import { ModbusResult } from '../../modbus/reader';
 import { FlowCardTrigger } from 'homey';
+import config from './driver.compose.json';
 
 class GridDevice extends BaseDevice {
 
   stateFlowTrigger!: FlowCardTrigger;
 
   async onInit() {
+    await this.checkCapabilites(config.capabilities);
     await super.onInit();
+
     this.stateFlowTrigger = this.homey.flow.getTriggerCard('alpha_state_changed');
   }
 

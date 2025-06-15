@@ -4,15 +4,13 @@ import ModbusBaseDevice from '../baseModbusDevice';
 import { powerToBatteryState } from '../../utils/batteryState';
 import { formatBit } from '../../utils/formatBit';
 import { ModbusResult } from '../../modbus/reader';
+import config from './driver.compose.json';
 
 class BatteryDevice extends ModbusBaseDevice {
 
   async onInit() {
+    await this.checkCapabilites(config.capabilities);
     await super.onInit();
-
-    if (this.hasCapability('battery_charging_state')) {
-      await this.addCapability('battery_charging_state');
-    }
   }
 
   async setCapabilities(data: ModbusResult) {

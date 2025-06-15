@@ -2,10 +2,12 @@
 
 import { ModbusResult } from '../../modbus/reader';
 import BaseDevice from '../baseModbusDevice';
+import config from './driver.compose.json';
 
 class PanelDevice extends BaseDevice {
 
   async onInit() {
+    await this.checkCapabilites(config.capabilities);
     await super.onInit();
   }
 

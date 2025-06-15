@@ -51,6 +51,19 @@ export default class ModbusBaseDevice extends Device {
   errorEmitter?: (e: unknown) => void;
   dataEmitter?: (data: unknown) => unknown;
 
+  async checkCapabilites(list: string[]) {
+    this.log('Checking capabilities', list);
+
+    await Promise.all(list.map((e) => {
+      if (!this.hasCapability(e)) {
+        this.log('Adding capability', e);
+        return this.addCapability(e);
+      }
+
+      return null;
+    }));
+  }
+
   async onInit() {
     this.log('Device has been initialized');
     await this.startPolling();
